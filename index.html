@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>بۆ تاقانەکەم 💗</title>
     <style>
-        /* هێنانی فۆنتی کوردی جوان و ناسک */
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;700&display=swap');
 
         * {
@@ -18,7 +17,6 @@
         }
 
         body {
-            /* باگراوندی سپی و پینکی ناسک لە شێوازی گرادێنت */
             background: linear-gradient(135deg, #ffeef2 0%, #ffffff 50%, #ffdde2 100%);
             color: #4a3b40;
             display: flex;
@@ -27,6 +25,22 @@
             min-height: 100vh;
             overflow: hidden;
             position: relative;
+            transition: background 1.5s ease;
+        }
+
+        /* باگراوەندی بریسقەدار و جوڵاو */
+        .bg-sparkle {
+            position: absolute;
+            background: radial-gradient(circle, rgba(255,182,193,0.6) 0%, rgba(255,255,255,0) 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: floatSparkle 8s infinite linear;
+        }
+
+        @keyframes floatSparkle {
+            0% { transform: translateY(100vh) scale(0.5); opacity: 0; }
+            50% { opacity: 0.5; }
+            100% { transform: translateY(-10vh) scale(1.2); opacity: 0; }
         }
 
         .container {
@@ -39,23 +53,22 @@
             text-align: center;
             gap: 25px;
             z-index: 10;
-            background: rgba(255, 255, 255, 0.75);
+            background: rgba(255, 255, 255, 0.85);
             border-radius: 30px;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 10px 30px rgba(255, 182, 193, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(15px);
+            box-shadow: 0 15px 35px rgba(255, 182, 193, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.9);
+            transition: transform 0.3s ease;
         }
 
-        /* دەقی سەرەوە */
         .instruction-text {
-            font-size: 15px;
+            font-size: 14px;
             color: #a38f96;
             font-weight: 500;
             min-height: 24px;
-            transition: opacity 0.3s ease;
+            letter-spacing: 0.5px;
         }
 
-        /* دەقی سەرەکی ناوەڕاست */
         .main-text {
             font-size: 20px;
             font-weight: 700;
@@ -64,90 +77,102 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: opacity 0.3s ease;
+            transition: opacity 0.2s ease;
             padding: 10px;
             color: #333333;
         }
 
-        /* دیزاینی نوێی تایپینگ بۆ دەقی کۆتایی */
         .typing-effect {
             text-align: justify;
             text-align-last: center;
             font-size: 15px !important;
             font-weight: 600 !important;
-            line-height: 1.9;
+            line-height: 2;
             color: #444444;
+            animation: fadeInText 0.5s ease forwards;
+        }
+
+        @keyframes fadeInText {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* شوێنی دڵەکە و وەیڤەکان */
+        .heart-container {
+            position: relative;
+            width: 120px;
+            height: 120px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* وەیڤی لێدانی دڵ (ECG Wave Effect) */
+        .heart-wave {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 2px solid #ff4d6d;
+            opacity: 0;
+            transform: scale(0.9);
+            pointer-events: none;
+        }
+
+        @keyframes waveAnimate {
+            0% { transform: scale(0.8); opacity: 0.8; border-color: #ff4d6d; }
+            50% { opacity: 0.4; }
+            100% { transform: scale(2); opacity: 0; border-color: #ff85a2; }
         }
 
         /* بازنەی دڵەکە */
         .fingerprint-area {
             position: relative;
-            width: 110px;
-            height: 110px;
+            width: 100px;
+            height: 100px;
             border-radius: 50%;
-            border: 2px dashed #ffb6c1;
+            border: 2px solid #ffccd5;
             display: flex;
             justify-content: center;
             align-items: center;
             cursor: pointer;
             outline: none;
             -webkit-tap-highlight-color: transparent;
-            background: rgba(255, 255, 255, 0.9);
-            box-shadow: 0 5px 15px rgba(255, 182, 193, 0.2);
-            transition: all 0.3s ease;
+            background: #ffffff;
+            box-shadow: 0 8px 20px rgba(255, 182, 193, 0.3);
+            z-index: 5;
+            transition: background 0.3s, border-color 0.3s;
         }
 
-        .fingerprint-area:active {
-            transform: scale(0.95);
-        }
-
-        /* بازنەی لێدانی چواردەوری دڵەکە */
-        .pulse-ring {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            border: 3px solid #ff4d6d;
-            opacity: 0;
-            transform: scale(1);
-            pointer-events: none;
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); opacity: 0.6; }
-            100% { transform: scale(1.4); opacity: 0; }
-        }
-
-        /* ئایکۆنی ناوەڕاست */
         .icon {
             font-size: 45px;
-            transition: transform 0.2s ease, color 0.3s ease;
-            z-index: 2;
+            z-index: 6;
+            transform: scale(1);
+            display: inline-block;
         }
 
-        /* ئەنیمەیشنی لێدانی دڵ */
-        @keyframes heartBeat {
+        /* لێدانی نەرم و تەختیل (Haptic Feel Smooth Beat) */
+        @keyframes hapticBeat {
             0% { transform: scale(1); }
-            20% { transform: scale(1.15); }
-            40% { transform: scale(1); }
-            60% { transform: scale(1.15); }
-            80% { transform: scale(1); }
+            12% { transform: scale(1.22); }
+            25% { transform: scale(1.03); }
+            38% { transform: scale(1.15); }
+            55% { transform: scale(0.97); }
             100% { transform: scale(1); }
         }
 
-        /* دڵە فڕیوەکانی پشتەوە */
         .particle-heart {
             position: absolute;
             color: #ff758f;
             opacity: 0;
             pointer-events: none;
-            z-index: 1;
+            z-index: 2;
         }
 
         @keyframes floatUp {
-            0% { transform: translateY(0) scale(0.5); opacity: 0; }
-            50% { opacity: 0.8; }
-            100% { transform: translateY(-180px) scale(1.3); opacity: 0; }
+            0% { transform: translateY(0) scale(0.5) rotate(0deg); opacity: 0; }
+            30% { opacity: 0.9; }
+            100% { transform: translateY(-200px) scale(1.4) rotate(20deg); opacity: 0; }
         }
     </style>
 </head>
@@ -157,16 +182,19 @@
         <source src="1000054516.mp4" type="video/mp4">
     </audio>
 
-    <div class="container">
+    <div class="container" id="card-box">
         <div class="instruction-text" id="instruction">پەنجەت لێرە دابنێ و لای مەبە...💗</div>
 
         <div class="main-text" id="story-display">
             هەست بە لێدانی دڵم دەکەیت؟...
         </div>
 
-        <div class="fingerprint-area" id="hold-target">
-            <div class="pulse-ring" id="ring"></div>
-            <div class="icon" id="main-icon">❤️</div>
+        <div class="heart-container">
+            <div class="heart-wave" id="wave1"></div>
+            <div class="heart-wave" id="wave2"></div>
+            <div class="fingerprint-area" id="hold-target">
+                <div class="icon" id="main-icon">❤️</div>
+            </div>
         </div>
     </div>
 
@@ -175,10 +203,22 @@
         const storyDisplay = document.getElementById('story-display');
         const holdTarget = document.getElementById('hold-target');
         const mainIcon = document.getElementById('main-icon');
-        const ring = document.getElementById('ring');
+        const wave1 = document.getElementById('wave1');
+        const wave2 = document.getElementById('wave2');
+        const cardBox = document.getElementById('card-box');
         const bgMusic = document.getElementById('bg-music');
 
-        // دەقەکان بەبێ دێڕی یەکەم (سەرت لێشێواوە لادرا)
+        // دروستکردنی ئەستێرە گەشاوەکان لە باگراوند
+        for(let i=0; i<12; i++) {
+            let sparkle = document.createElement('div');
+            sparkle.classList.add('bg-sparkle');
+            sparkle.style.width = Math.random() * 80 + 40 + 'px';
+            sparkle.style.height = sparkle.style.width;
+            sparkle.style.left = Math.random() * 100 + 'vw';
+            sparkle.style.animationDelay = Math.random() * 6 + 's';
+            document.body.appendChild(sparkle);
+        }
+
         const storyStages = [
             "هەست بە لێدانی دڵم دەکەیت؟...",
             "ئەم دڵە تەنیا بۆ تۆ لێ دەدات...",
@@ -191,15 +231,10 @@
         let particleInterval = null;
         let isHolding = false;
 
-        // ئەنیمەیشنی تایپینگ بۆ دەقی کۆتایی
-        function typeWriter(text, element, speed = 40) {
+        function typeWriter(text, element, speed = 30) {
             element.innerHTML = "";
             element.classList.add("typing-effect");
             let i = 0;
-            
-            // گۆڕینی لادانی دێڕەکان بۆ بی تێک نەچێت لە HTML
-            let formattedText = text.replace(/\n/g, "<br>");
-            
             function type() {
                 if (i < text.length) {
                     if (text.substr(i, 2) === "\n") {
@@ -221,64 +256,73 @@
                 storyDisplay.style.opacity = 0;
                 
                 setTimeout(() => {
-                    // ئەگەر قۆناغی کۆتایی بوو، بە تایپینگ دایبنێ
                     if (currentStage === 3) {
                         instruction.innerText = "بۆ هەمیشە... ✨";
-                        mainIcon.style.animation = "heartBeat 0.35s infinite linear";
-                        ring.style.animation = "pulse 0.35s infinite linear";
-                        clearInterval(stageInterval); // وەستاندنی کاتەکە چونکە گەیشتە کۆتایی
                         
+                        // وەیڤی خێرا و لێدانی زۆر قورس لە کۆتاییدا
+                        mainIcon.style.animation = "hapticBeat 0.4s infinite cubic-bezier(0.25, 0.8, 0.25, 1)";
+                        wave1.style.animation = "waveAnimate 0.4s infinite linear";
+                        wave2.style.animation = "waveAnimate 0.4s infinite linear 0.2s";
+                        
+                        // سوپڕایز: گۆڕینی ڕەنگی پاشبنەما بۆ پینکی تەواو
+                        document.body.style.background = "linear-gradient(135deg, #ffccd5 0%, #ffe5ec 100%)";
+                        cardBox.style.transform = "scale(1.03)";
+
+                        clearInterval(stageInterval);
                         storyDisplay.style.opacity = 1;
-                        typeWriter(storyStages[currentStage], storyDisplay, 35); // خێرایی تایپینگ (٣٥ میلی چرکە)
+                        typeWriter(storyStages[currentStage], storyDisplay, 30);
                     } else {
                         storyDisplay.innerText = storyStages[currentStage];
                         storyDisplay.style.opacity = 1;
                         
-                        // خێراتر کردنی لێدانی دڵ لە هەر قۆناغێکدا
+                        // خێراکردنی وەیڤەکان و لێدانەکە بەپێی قۆناغەکان (تەختیل)
                         if (currentStage === 1) {
                             instruction.innerText = "ئەم دڵە تەنیا بۆ تۆ لێ دەدات... 💕";
-                            mainIcon.style.animation = "heartBeat 0.7s infinite linear";
-                            ring.style.animation = "pulse 0.7s infinite linear";
+                            mainIcon.style.animation = "hapticBeat 0.7s infinite cubic-bezier(0.25, 0.8, 0.25, 1)";
+                            wave1.style.animation = "waveAnimate 0.7s infinite linear";
+                            wave2.style.animation = "waveAnimate 0.7s infinite linear 0.35s";
                         } else if (currentStage === 2) {
                             instruction.innerText = "خۆشم دەوێیت... 💖";
-                            mainIcon.style.animation = "heartBeat 0.5s infinite linear";
-                            ring.style.animation = "pulse 0.5s infinite linear";
+                            mainIcon.style.animation = "hapticBeat 0.5s infinite cubic-bezier(0.25, 0.8, 0.25, 1)";
+                            wave1.style.animation = "waveAnimate 0.5s infinite linear";
+                            wave2.style.animation = "waveAnimate 0.5s infinite linear 0.25s";
                         }
                     }
-                }, 300);
+                }, 200);
             }
         }
 
-        // دروستکردنی دڵە فڕیوە پینکییەکان
         function spawnHeartParticle() {
             const heart = document.createElement('div');
             heart.classList.add('particle-heart');
-            heart.innerHTML = Math.random() > 0.5 ? '💗' : '❤️';
-            heart.style.left = (holdTarget.offsetLeft + 10 + Math.random() * 90) + 'px';
-            heart.style.top = (holdTarget.offsetTop + 10 + Math.random() * 90) + 'px';
-            heart.style.fontSize = (Math.random() * 12 + 12) + 'px';
-            heart.style.animation = 'floatUp 1.2s ease-out forwards';
+            heart.innerHTML = Math.random() > 0.4 ? '💗' : '✨';
+            heart.style.left = (holdTarget.parentNode.offsetLeft + 20 + Math.random() * 80) + 'px';
+            heart.style.top = (holdTarget.parentNode.offsetTop + 20 + Math.random() * 80) + 'px';
+            heart.style.fontSize = (Math.random() * 12 + 14) + 'px';
+            heart.style.animation = 'floatUp 1s ease-out forwards';
             document.body.appendChild(heart);
-            setTimeout(() => heart.remove(), 1200);
+            setTimeout(() => heart.remove(), 1000);
         }
 
-        // دەستپێکردنی داگرتن
         function startHold(e) {
             e.preventDefault();
             if (isHolding) return;
             isHolding = true;
 
             bgMusic.play().catch(() => {});
-            ring.style.opacity = "1";
-            mainIcon.style.animation = "heartBeat 1s infinite linear";
-            ring.style.animation = "pulse 1s infinite linear";
+            holdTarget.style.borderColor = "#ff4d6d";
+            holdTarget.style.background = "#fff0f3";
+            
+            // قۆناغی یەکەم لێدانی تەختیل و وەیڤ چالاک دەبێت
+            mainIcon.style.animation = "hapticBeat 1s infinite cubic-bezier(0.25, 0.8, 0.25, 1)";
+            wave1.style.animation = "waveAnimate 1s infinite linear";
+            wave2.style.animation = "waveAnimate 1s infinite linear 0.5s";
 
-            // کاتی گۆڕینی نێوان دەقەکان کەمکراوەتەوە بۆ ٢ چرکە و نیو (2500ms) بۆ ئەوەی خێرا بێت
-            stageInterval = setInterval(progressStages, 2500);
-            particleInterval = setInterval(spawnHeartParticle, 300);
+            // کاتەکە کەمکراوەتەوە بۆ لێدانی زۆر خێرا (تەنها 1500 میلی چرکە بۆ هەر دەقێک)
+            stageInterval = setInterval(progressStages, 1500);
+            particleInterval = setInterval(spawnHeartParticle, 250);
         }
 
-        // بەردانی دەست (ڕیست بوونەوە ئەگەر پێش کۆتایی بەری بدات)
         function endHold() {
             if (!isHolding) return;
             isHolding = false;
@@ -286,23 +330,28 @@
             clearInterval(stageInterval);
             clearInterval(particleInterval);
 
+            // ئەگەر پێش گەیشتن بە کۆتایی دەستی لابدات، هەموو شتێک ڕیست دەبێتەوە
             if (currentStage < 3) {
                 currentStage = 0;
                 storyDisplay.style.opacity = 0;
                 storyDisplay.classList.remove("typing-effect");
+                document.body.style.background = "linear-gradient(135deg, #ffeef2 0%, #ffffff 50%, #ffdde2 100%)";
+                cardBox.style.transform = "scale(1)";
+                
                 setTimeout(() => {
                     storyDisplay.innerText = storyStages[0];
                     storyDisplay.style.opacity = 1;
-                }, 200);
+                }, 150);
 
                 instruction.innerText = "پەنجەت لێرە دابنێ و لای مەبە...💗";
                 mainIcon.style.animation = "none";
-                ring.style.animation = "none";
-                ring.style.opacity = "0";
+                wave1.style.animation = "none";
+                wave2.style.animation = "none";
+                holdTarget.style.borderColor = "#ffccd5";
+                holdTarget.style.background = "#ffffff";
             }
         }
 
-        // بەستنەوە بە ماوس و شاشەی لەمس
         holdTarget.addEventListener('mousedown', startHold);
         holdTarget.addEventListener('mouseup', endHold);
         holdTarget.addEventListener('mouseleave', endHold);
