@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="ku" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>پەنجەت لێرە دابنێ...</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        body {
+            background-color: #000000;
+            color: #ffffff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 400px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 30px;
+            z-index: 10;
+        }
+
+        /* Top instruction text */
+        .instruction-text {
+            font-size: 16px;
+            color: #a0a0a0;
+            min-height: 24px;
+            transition: opacity 0.3s ease;
+        }
+
+        /* Main story text area */
+        .main-text {
+            font-size: 20px;
+            font-weight: bold;
+            line-height: 1.8;
+            min-height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.5s ease;
+            padding: 10px;
+        }
+
+        /* Interactive Fingerprint Circle */
+        .fingerprint-area {
+            position: relative;
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            border: 2px dashed #444;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            outline: none;
+            -webkit-tap-highlight-color: transparent;
+            transition: border-color 0.3s ease;
+        }
+
+        /* Outer pulse ring when holding */
+        .pulse-ring {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 3px solid #ff4757;
+            opacity: 0;
+            transform: scale(1);
+            pointer-events: none;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 0.6; }
+            100% { transform: scale(1.4); opacity: 0; }
+        }
+
+        /* Central Icon (Fingerprint or Heart) */
+        .icon {
+            font-size: 50px;
+            transition: transform 0.2s ease, color 0.3s ease;
+            z-index: 2;
+        }
+
+        /* Heart beating animation scale */
+        @keyframes heartBeat {
+            0% { transform: scale(1); }
+            20% { transform: scale(1.15); }
+            40% { transform: scale(1); }
+            60% { transform: scale(1.15); }
+            80% { transform: scale(1); }
+            100% { transform: scale(1); }
+        }
+
+        /* Background floating small hearts particles */
+        .particle-heart {
+            position: absolute;
+            color: #ff4757;
+            opacity: 0;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(0) scale(0.5); opacity: 0; }
+            50% { opacity: 0.6; }
+            100% { transform: translateY(-150px) scale(1.2); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <audio id="bg-music" loop>
+        <source src="1000054516.mp4" type="video/mp4">
+    </audio>
+
+    <div class="container">
+        <div class="instruction-text" id="instruction">پەنجەت لێرە دابنێ و لای مەبە...</div>
+
+        <div class="main-text" id="story-display">
+            سەرت لێ شێواوە و نازانی چ دیارییەک پێشکەش بە خۆشەویستەکەت بکەیت؟
+        </div>
+
+        <div class="fingerprint-area" id="hold-target">
+            <div class="pulse-ring" id="ring"></div>
+            <div class="icon" id="main-icon">☝️</div>
+        </div>
+    </div>
+
+    <script>
+        const instruction = document.getElementById('instruction');
+        const storyDisplay = document.getElementById('story-display');
+        const holdTarget = document.getElementById('hold-target');
+        const mainIcon = document.getElementById('main-icon');
+        const ring = document.getElementById('ring');
+        const bgMusic = document.getElementById('bg-music');
+
+        // Text stages from the exact video
+        const storyStages = [
+            "سەرت لێ شێواوە و نازانی چ دیارییەک پێشکەش بە خۆشەویستەکەت بکەیت؟",
+            "هەست بە لێدانی دڵم دەکەیت؟...",
+            "ئەم دڵە تەنیا بۆ تۆ لێ دەدات...",
+            "خۆشم دەوێیت...",
+            "خۆشەویسترین کەسی ژیانم...\n\nئەو دڵەی ئێستا هەستت پێکرد، لە ساتی بینینی تۆوە ئیتر موڵکی من نییە! تۆ بوویت بەو خوێنەی بە دەمارەکانمدا دەگەڕێت و بوویت بە ڕووناکی بۆ تاریکاییەکانی ڕۆحم.\n\nگەر هەموو تەمەنم یەک چرکە بێت، دەمهەوێت ئەو چرکەیە لەناو قووڵایی چاوەکانی تۆدا بەسەر ببەم. زۆرم خۆشدەوێیت، هێندەی هەموو ئەو تیرانەی کە تا کۆتایی تەمەنم لە سنگمدا لێ دەدەن..."
+        ];
+
+        let currentStage = 0;
+        let holdTimer = null;
+        let stageInterval = null;
+        let particleInterval = null;
+        let isHolding = false;
+
+        // Function to trigger text progression smoothly
+        function progressStages() {
+            if (currentStage < storyStages.length - 1) {
+                currentStage++;
+                storyDisplay.style.opacity = 0;
+                
+                setTimeout(() => {
+                    storyDisplay.innerText = storyStages[currentStage];
+                    storyDisplay.style.opacity = 1;
+                    
+                    // Custom adjustments based on the video flow
+                    if (currentStage === 1) {
+                        instruction.innerText = "هەست بە لێدانی دڵم دەکەیت؟...";
+                        mainIcon.innerText = "❤️";
+                        mainIcon.style.color = "#ff4757";
+                        mainIcon.style.animation = "heartBeat 1.2s infinite linear";
+                        ring.style.animation = "pulse 1.2s infinite linear";
+                        holdTarget.style.borderColor = "#ff4757";
+                    } else if (currentStage === 2) {
+                        instruction.innerText = "ئەم دڵە تەنیا بۆ تۆ لێ دەدات...";
+                        mainIcon.style.animation = "heartBeat 0.8s infinite linear";
+                        ring.style.animation = "pulse 0.8s infinite linear";
+                    } else if (currentStage === 3) {
+                        instruction.innerText = "خۆشم دەوێیت...";
+                        mainIcon.style.animation = "heartBeat 0.5s infinite linear";
+                        ring.style.animation = "pulse 0.5s infinite linear";
+                    } else if (currentStage === 4) {
+                        instruction.innerText = ""; // Hide hint text at the end
+                        storyDisplay.style.fontSize = "16px";
+                        storyDisplay.style.textAlign = "justify";
+                        storyDisplay.style.whiteSpace = "pre-line";
+                        
+                        // Final climax state
+                        mainIcon.style.animation = "heartBeat 0.4s infinite linear";
+                        ring.style.animation = "pulse 0.4s infinite linear";
+                        clearInterval(stageInterval); // Stop automatic changing once reached end
+                    }
+                }, 400);
+            }
+        }
+
+        // Generate tiny floating hearts while holding
+        function spawnHeartParticle() {
+            const heart = document.createElement('div');
+            heart.classList.add('particle-heart');
+            heart.innerHTML = '❤️';
+            heart.style.left = (holdTarget.offsetLeft + Math.random() * 130) + 'px';
+            heart.style.top = (holdTarget.offsetTop + Math.random() * 130) + 'px';
+            heart.style.fontSize = (Math.random() * 12 + 10) + 'px';
+            heart.style.animation = 'floatUp 1.5s ease-out forwards';
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), 1500);
+        }
+
+        // Handle Hold Start
+        function startHold(e) {
+            e.preventDefault();
+            if (isHolding) return;
+            isHolding = true;
+
+            // Try to play audio on interaction
+            bgMusic.play().catch(() => {});
+
+            // Visual feedback
+            ring.style.opacity = "1";
+            
+            // Set initial delays matching video timing
+            stageInterval = setInterval(progressStages, 3500);
+            particleInterval = setInterval(spawnHeartParticle, 400);
+        }
+
+        // Handle Hold End (Reset to initial state if released early)
+        function endHold() {
+            if (!isHolding) return;
+            isHolding = false;
+
+            // Clear active timers
+            clearInterval(stageInterval);
+            clearInterval(particleInterval);
+
+            // Reset UI smoothly unless they fully completed the script
+            if (currentStage < 4) {
+                currentStage = 0;
+                storyDisplay.style.opacity = 0;
+                setTimeout(() => {
+                    storyDisplay.innerText = storyStages[0];
+                    storyDisplay.style.opacity = 1;
+                    storyDisplay.style.fontSize = "20px";
+                    storyDisplay.style.textAlign = "center";
+                }, 300);
+
+                instruction.innerText = "پەنجەت لێرە دابنێ و لای مەبە...";
+                mainIcon.innerText = "☝️";
+                mainIcon.style.color = "#ffffff";
+                mainIcon.style.animation = "none";
+                ring.style.animation = "none";
+                ring.style.opacity = "0";
+                holdTarget.style.borderColor = "#444";
+            }
+        }
+
+        // Event listeners supporting both Desktop & Mobile Devices
+        holdTarget.addEventListener('mousedown', startHold);
+        holdTarget.addEventListener('mouseup', endHold);
+        holdTarget.addEventListener('mouseleave', endHold);
+
+        holdTarget.addEventListener('touchstart', startHold);
+        holdTarget.addEventListener('touchend', endHold);
+    </script>
+</body>
+</html>
