@@ -1,461 +1,744 @@
 <!DOCTYPE html>
 <html lang="ku" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>بۆ تاقانەکەم 💗</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;700&display=swap');
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>بۆ تاقانەکەم 🖤🌹</title>
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            user-select: none;
-            -webkit-user-select: none;
-            font-family: 'Noto Sans Arabic', Tahoma, sans-serif;
-        }
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;500;700;800&display=swap');
 
-        body {
-            background: radial-gradient(circle at center, #2d1b24 0%, #120a0e 60%, #050204 100%);
-            color: #ffffff;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            overflow: hidden;
-            position: relative;
-        }
+    :root {
+      --bg1: #050304;
+      --bg2: #12070c;
+      --bg3: #1b0a12;
+      --bg4: #090406;
 
-        /* گەردوونی پڕ لە ئەستێرە و دڵ */
-        .galaxy-container {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            pointer-events: none;
-            z-index: 1;
-        }
+      --card: rgba(255, 255, 255, 0.055);
+      --card-border: rgba(255, 190, 210, 0.10);
+      --glass: rgba(10, 4, 7, 0.50);
 
-        .star, .space-heart {
-            position: absolute;
-            border-radius: 50%;
-            background: #fff;
-            animation: floatSpace 12s infinite linear;
-            opacity: 0;
-        }
+      --text: #fff4f7;
+      --soft: #f5c5d2;
+      --muted: #dba1b5;
 
-        @keyframes floatSpace {
-            0% { transform: translateY(105vh) scale(0.3) rotate(0deg); opacity: 0; }
-            20% { opacity: 0.6; }
-            80% { opacity: 0.6; }
-            100% { transform: translateY(-10vh) scale(1.1) rotate(360deg); opacity: 0; }
-        }
+      --rose: #ff4f7a;
+      --rose-2: #ff7fa2;
+      --rose-3: #ffc2d1;
+      --dark-rose: #8a2448;
+      --glow: rgba(255, 79, 122, 0.30);
 
-        /* کارتەکە */
-        .container {
-            width: 90%;
-            max-width: 400px;
-            padding: 30px 25px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            gap: 25px;
-            z-index: 10;
-            background: rgba(255, 238, 242, 0.04);
-            border-radius: 30px;
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), inset 0 0 20px rgba(255, 182, 193, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            position: relative;
-            overflow: hidden;
-            transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
-        }
+      --radius-xl: 30px;
+      --radius-lg: 22px;
+      --radius-md: 16px;
 
-        /* وێنەی پاشبنەمای سوپڕایز لە کۆتاییدا */
-        .card-bg-image {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: url('1000054531.jpg');
-            background-size: cover;
-            background-position: center;
-            opacity: 0;
-            z-index: -1;
-            transition: opacity 2.5s ease;
-            filter: brightness(0.35) blur(0.5px);
-        }
+      --transition: 0.45s cubic-bezier(.2, .8, .2, 1);
+    }
 
-        .instruction-text {
-            font-size: 14px;
-            color: #ffb6c1;
-            font-weight: 500;
-            min-height: 24px;
-            letter-spacing: 0.5px;
-            text-shadow: 0 2px 10px rgba(255, 77, 109, 0.4);
-            z-index: 2;
-        }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Noto Sans Arabic', Tahoma, sans-serif;
+      user-select: none;
+      -webkit-user-select: none;
+      -webkit-tap-highlight-color: transparent;
+    }
 
-        .main-text {
-            font-size: 20px;
-            font-weight: 700;
-            line-height: 1.8;
-            min-height: 140px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.5s ease;
-            padding: 15px;
-            color: #ffffff;
-            text-shadow: 0 2px 15px rgba(255, 255, 255, 0.2);
-            z-index: 2;
-            border-radius: 20px;
-        }
+    html, body {
+      width: 100%;
+      min-height: 100%;
+    }
 
-        .text-glass-mode {
-            background: rgba(0, 0, 0, 0.45);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-        }
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      color: var(--text);
+      position: relative;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(138, 36, 72, 0.25), transparent 24%),
+        radial-gradient(circle at 80% 18%, rgba(255, 79, 122, 0.12), transparent 18%),
+        radial-gradient(circle at 50% 85%, rgba(255, 120, 160, 0.09), transparent 24%),
+        linear-gradient(145deg, var(--bg1), var(--bg2) 35%, var(--bg3) 70%, var(--bg4));
+      transition: background 1s ease;
+    }
 
-        .typing-effect {
-            text-align: justify;
-            text-align-last: center;
-            font-size: 15px !important;
-            font-weight: 600 !important;
-            line-height: 2.1;
-            color: #ffe0e6;
-            text-shadow: 0 0 10px rgba(255, 182, 193, 0.2);
-        }
+    .ambient {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
 
-        /* بەشی دڵەکە */
-        .heart-wrapper {
-            position: relative;
-            width: 120px;
-            height: 120px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            transition: all 0.6s ease;
-            z-index: 2;
-        }
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(60px);
+      opacity: 0.28;
+      animation: floatOrb 14s ease-in-out infinite alternate;
+    }
 
-        .fingerprint-area {
-            position: relative;
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            border: 2px solid rgba(255, 204, 213, 0.25);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-            outline: none;
-            -webkit-tap-highlight-color: transparent;
-            background: rgba(255, 255, 255, 0.04);
-            box-shadow: 0 8px 25px rgba(255, 77, 109, 0.15);
-        }
+    .orb.one {
+      width: 220px;
+      height: 220px;
+      background: rgba(255, 79, 122, 0.16);
+      top: 10%;
+      right: 10%;
+    }
 
-        .icon {
-            font-size: 45px;
-        }
+    .orb.two {
+      width: 200px;
+      height: 200px;
+      background: rgba(138, 36, 72, 0.24);
+      left: 8%;
+      bottom: 12%;
+      animation-duration: 17s;
+    }
 
-        /* 🏥 مۆنیتەری نوێی دڵ کە بەردەوام هێڵەکەی نوێ دەبێتەوە و قەبارەی دەگۆڕێت */
-        .haptic-line-container {
-            width: 100%;
-            height: 85px;
-            display: none;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
-            margin-top: 10px;
-            position: relative;
-            background: rgba(7, 2, 4, 0.6);
-            border-radius: 15px;
-            border: 1px solid rgba(255, 77, 109, 0.2);
-            z-index: 2;
-        }
+    .orb.three {
+      width: 170px;
+      height: 170px;
+      background: rgba(255, 194, 209, 0.10);
+      right: 25%;
+      bottom: 28%;
+      animation-duration: 12s;
+    }
 
-        .ecg-svg-base {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            left: 0;
-            top: 0;
-        }
+    @keyframes floatOrb {
+      from { transform: translate(0, 0) scale(1); }
+      to { transform: translate(20px, 14px) scale(1.08); }
+    }
 
-        .ecg-static-path {
-            stroke: rgba(255, 77, 109, 0.12);
-            stroke-width: 2;
-            fill: none;
-        }
+    .galaxy-container {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      overflow: hidden;
+    }
 
-        .ecg-dynamic-path {
-            stroke: #ff4d6d;
-            stroke-width: 3;
-            fill: none;
-            stroke-dasharray: 1200;
-            stroke-dashoffset: 1200;
-            animation: hospitalScan 2.5s linear infinite;
-            filter: drop-shadow(0 0 6px #ff4d6d) drop-shadow(0 0 1px #ffffff);
-        }
+    .star, .space-heart {
+      position: absolute;
+      opacity: 0;
+      animation: floatSpace linear infinite;
+      will-change: transform, opacity;
+    }
 
-        @keyframes hospitalScan {
-            0% { stroke-dashoffset: 1200; }
-            100% { stroke-dashoffset: 0; }
-        }
+    .star {
+      border-radius: 50%;
+      box-shadow: 0 0 10px rgba(255, 220, 230, 0.35);
+    }
 
-        .particle-heart {
-            position: absolute;
-            color: #ff758f;
-            opacity: 0;
-            pointer-events: none;
-            z-index: 2;
-        }
+    .space-heart {
+      background: none !important;
+      filter: drop-shadow(0 0 10px rgba(255, 79, 122, 0.35));
+    }
 
-        @keyframes floatUp {
-            0% { transform: translateY(0) scale(0.5); opacity: 0; }
-            30% { opacity: 1; }
-            100% { transform: translateY(-150px) scale(1.3); opacity: 0; }
-        }
-    </style>
+    @keyframes floatSpace {
+      0% {
+        transform: translateY(110vh) scale(.4) rotate(0deg);
+        opacity: 0;
+      }
+      15% { opacity: .7; }
+      80% { opacity: .7; }
+      100% {
+        transform: translateY(-12vh) scale(1.12) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    .container {
+      position: relative;
+      z-index: 10;
+      width: min(92vw, 430px);
+      padding: 28px 22px 22px;
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 22px;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.07), rgba(255,255,255,0.03));
+      border: 1px solid var(--card-border);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      box-shadow:
+        0 25px 65px rgba(0, 0, 0, 0.55),
+        0 0 0 1px rgba(255,255,255,0.03) inset,
+        inset 0 1px 0 rgba(255,255,255,0.06);
+      transition: all 0.9s ease;
+    }
+
+    .container::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(135deg, rgba(255,255,255,0.08), transparent 28%, transparent 72%, rgba(255,255,255,0.03));
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .card-bg-image {
+      position: absolute;
+      inset: 0;
+      background-image: url('1000054531.jpg');
+      background-size: cover;
+      background-position: center;
+      opacity: 0;
+      z-index: -2;
+      transition: opacity 2s ease;
+      filter: brightness(0.28) saturate(0.95) blur(0.8px);
+      transform: scale(1.05);
+    }
+
+    .card-overlay {
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      background:
+        linear-gradient(to bottom, rgba(5,2,4,0.08), rgba(8,3,6,0.72)),
+        radial-gradient(circle at top, rgba(255, 79, 122, 0.09), transparent 26%);
+    }
+
+    .instruction-text {
+      position: relative;
+      z-index: 2;
+      min-height: 22px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--soft);
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.06);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.04);
+      letter-spacing: 0.2px;
+      text-shadow: 0 0 14px rgba(255, 79, 122, 0.25);
+    }
+
+    .main-text {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      min-height: 150px;
+      padding: 18px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      line-height: 2;
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--text);
+      border-radius: var(--radius-lg);
+      text-shadow: 0 2px 18px rgba(255,255,255,0.10);
+      transition: var(--transition);
+    }
+
+    .text-glass-mode {
+      background:
+        linear-gradient(180deg, rgba(0,0,0,0.42), rgba(18,7,12,0.28));
+      border: 1px solid rgba(255, 190, 210, 0.10);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      box-shadow:
+        0 18px 35px rgba(0,0,0,0.26),
+        inset 0 1px 0 rgba(255,255,255,0.04);
+    }
+
+    .typing-effect {
+      font-size: 15px !important;
+      font-weight: 600 !important;
+      line-height: 2.15 !important;
+      text-align: justify;
+      text-align-last: center;
+      color: #ffe8ef;
+    }
+
+    .heart-wrapper {
+      position: relative;
+      z-index: 2;
+      width: 130px;
+      height: 130px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform .55s ease, opacity .55s ease;
+    }
+
+    .heart-wrapper::before,
+    .heart-wrapper::after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .heart-wrapper::before {
+      width: 118px;
+      height: 118px;
+      background: radial-gradient(circle, rgba(255,79,122,0.16), transparent 68%);
+      animation: pulseAura 2.2s ease-in-out infinite;
+    }
+
+    .heart-wrapper::after {
+      width: 138px;
+      height: 138px;
+      border: 1px solid rgba(255, 127, 162, 0.10);
+      animation: ringPulse 2.6s ease-in-out infinite;
+    }
+
+    @keyframes pulseAura {
+      0%, 100% { transform: scale(.95); opacity: .7; }
+      50% { transform: scale(1.08); opacity: 1; }
+    }
+
+    @keyframes ringPulse {
+      0%, 100% { transform: scale(.96); opacity: .3; }
+      50% { transform: scale(1.06); opacity: .7; }
+    }
+
+    .fingerprint-area {
+      position: relative;
+      width: 102px;
+      height: 102px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      border: 1.5px solid rgba(255, 194, 209, 0.18);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03));
+      box-shadow:
+        0 14px 34px rgba(0,0,0,0.28),
+        0 0 25px rgba(255, 79, 122, 0.08),
+        inset 0 1px 0 rgba(255,255,255,0.06);
+      transition: all .25s ease;
+    }
+
+    .fingerprint-area:hover {
+      transform: translateY(-2px) scale(1.02);
+      border-color: rgba(255, 127, 162, 0.38);
+      box-shadow:
+        0 18px 38px rgba(0,0,0,0.34),
+        0 0 28px rgba(255, 79, 122, 0.12),
+        inset 0 1px 0 rgba(255,255,255,0.08);
+    }
+
+    .fingerprint-area.holding {
+      transform: scale(1.06);
+      background:
+        linear-gradient(180deg, rgba(255,79,122,0.18), rgba(255,255,255,0.04));
+      border-color: rgba(255, 127, 162, 0.82);
+      box-shadow:
+        0 0 0 10px rgba(255,79,122,0.05),
+        0 20px 40px rgba(0,0,0,0.38),
+        0 0 30px rgba(255,79,122,0.20);
+    }
+
+    .icon {
+      font-size: 42px;
+      filter: drop-shadow(0 0 14px rgba(255, 79, 122, 0.35));
+      animation: heartBeat 1.35s ease-in-out infinite;
+    }
+
+    @keyframes heartBeat {
+      0%, 100% { transform: scale(1); }
+      18% { transform: scale(1.08); }
+      38% { transform: scale(.97); }
+      60% { transform: scale(1.14); }
+    }
+
+    .haptic-line-container {
+      width: 100%;
+      height: 88px;
+      display: none;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      z-index: 2;
+      border-radius: 18px;
+      background:
+        linear-gradient(180deg, rgba(5,2,4,0.58), rgba(15,6,10,0.34));
+      border: 1px solid rgba(255, 79, 122, 0.12);
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.04),
+        0 8px 18px rgba(0,0,0,0.20);
+    }
+
+    .ecg-svg-base {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .ecg-static-path {
+      stroke: rgba(255, 127, 162, 0.10);
+      stroke-width: 2;
+      fill: none;
+    }
+
+    .ecg-dynamic-path {
+      stroke: #ff5b86;
+      stroke-width: 2.8;
+      fill: none;
+      stroke-dasharray: 1200;
+      stroke-dashoffset: 1200;
+      animation: hospitalScan 2.5s linear infinite;
+      filter: drop-shadow(0 0 7px rgba(255, 91, 134, 0.80));
+    }
+
+    @keyframes hospitalScan {
+      from { stroke-dashoffset: 1200; }
+      to { stroke-dashoffset: 0; }
+    }
+
+    .particle-heart {
+      position: absolute;
+      z-index: 20;
+      pointer-events: none;
+      opacity: 0;
+      color: var(--rose-2);
+      text-shadow: 0 0 12px rgba(255, 79, 122, 0.34);
+    }
+
+    @keyframes floatUp {
+      0% {
+        transform: translateY(0) scale(.55);
+        opacity: 0;
+      }
+      25% { opacity: 1; }
+      100% {
+        transform: translateY(-150px) scale(1.22) rotate(10deg);
+        opacity: 0;
+      }
+    }
+
+    .final-mode {
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02)),
+        radial-gradient(circle at top, rgba(255, 79, 122, 0.08), transparent 24%);
+      border-color: rgba(255, 127, 162, 0.16);
+      box-shadow:
+        0 35px 78px rgba(0,0,0,0.58),
+        0 0 40px rgba(255,79,122,0.10),
+        inset 0 1px 0 rgba(255,255,255,0.06);
+    }
+
+    @media (max-width: 480px) {
+      .container {
+        padding: 24px 18px 18px;
+        gap: 18px;
+      }
+
+      .main-text {
+        min-height: 138px;
+        font-size: 18px;
+      }
+
+      .typing-effect {
+        font-size: 14px !important;
+      }
+
+      .heart-wrapper {
+        width: 118px;
+        height: 118px;
+      }
+
+      .fingerprint-area {
+        width: 92px;
+        height: 92px;
+      }
+
+      .icon {
+        font-size: 38px;
+      }
+    }
+  </style>
 </head>
 <body>
 
-    <audio id="bg-music" loop>
-        <source src="1000054611.mp4" type="video/mp4">
-    </audio>
+  <audio id="bg-music" loop>
+    <source src="1000054611.mp4" type="video/mp4" />
+  </audio>
 
-    <div class="galaxy-container" id="galaxy"></div>
+  <div class="ambient">
+    <div class="orb one"></div>
+    <div class="orb two"></div>
+    <div class="orb three"></div>
+  </div>
 
-    <div class="container" id="card-box">
-        <div class="card-bg-image" id="bg-img"></div>
+  <div class="galaxy-container" id="galaxy"></div>
 
-        <div class="instruction-text" id="instruction">پەنجەت لێرە دابنێ و لای مەبە...💗</div>
+  <div class="container" id="card-box">
+    <div class="card-bg-image" id="bg-img"></div>
+    <div class="card-overlay"></div>
 
-        <div class="main-text" id="story-display">
-            هەست بە لێدانی دڵم دەکەیت?...
-        </div>
+    <div class="instruction-text" id="instruction">پەنجەت لێرە دابنێ و لای مەبە... 🖤</div>
 
-        <div class="heart-wrapper" id="heart-wrap">
-            <div class="fingerprint-area" id="hold-target">
-                <div class="icon" id="main-icon">❤️</div>
-            </div>
-        </div>
-
-        <div class="haptic-line-container" id="haptic-container">
-            <svg class="ecg-svg-base" viewBox="0 0 400 85" preserveAspectRatio="none">
-                <path id="static-p" class="ecg-static-path" d="" />
-                <path id="dynamic-p" class="ecg-dynamic-path" d="" />
-            </svg>
-        </div>
+    <div class="main-text" id="story-display">
+      هەست بە لێدانی دڵم دەکەیت؟...
     </div>
 
-    <script>
-        const instruction = document.getElementById('instruction');
-        const storyDisplay = document.getElementById('story-display');
-        const holdTarget = document.getElementById('hold-target');
-        const cardBox = document.getElementById('card-box');
-        const heartWrap = document.getElementById('heart-wrap');
-        const hapticContainer = document.getElementById('haptic-container');
-        const bgImg = document.getElementById('bg-img');
-        const galaxy = document.getElementById('galaxy');
-        const bgMusic = document.getElementById('bg-music');
-        const staticPath = document.getElementById('static-p');
-        const dynamicPath = document.getElementById('dynamic-p');
+    <div class="heart-wrapper" id="heart-wrap">
+      <div class="fingerprint-area" id="hold-target">
+        <div class="icon">❤️</div>
+      </div>
+    </div>
 
-        // 🧠 دروستکردنی لێدانی دڵی هەمەجۆر بە شێوازی عەشوائی بۆ ئەوەی هەرگیز وەک یەک نەبن و فەیک دەرنەچن
-        function generateRandomEcgPath() {
-            const centerY = 42; // نیوەی بەرزی مۆنیتەرەکە
-            let path = `M 0 ${centerY} L 30 ${centerY} `;
-            
-            // دروستکردنی ٣ لێدانی گەورە و بچووکی ناڕێک بە درێژایی مۆنیتەرەکە
-            let segments = [90, 200, 310]; 
-            
-            segments.forEach((startX) => {
-                let p1 = startX;
-                let p2 = startX + 10;
-                let p3 = startX + 20;
-                let p4 = startX + 30;
-                let p5 = startX + 40;
-                
-                // بەدەستهێنانی بەرز و نزمی جیاواز لە هەر خولانەوەیەکدا
-                let highPulse = Math.floor(Math.random() * 25) + 5;  // ئاستی بەرزبوونەوەی لێدانەکە
-                let lowPulse = Math.floor(Math.random() * 25) + 55; // ئاستی نزمبوونەوەی لێدانەکە
-                
-                path += `L ${p1} ${centerY} L ${p2} ${highPulse} L ${p3} ${lowPulse} L ${p4} ${centerY - 5} L ${p5} ${centerY} `;
-            });
-            
-            path += `L 400 ${centerY}`;
-            
-            // جێگیرکردنی نەخشە نوێیەکە لەسەر هێڵەکان
-            staticPath.setAttribute('d', path);
-            dynamicPath.setAttribute('d', path);
+    <div class="haptic-line-container" id="haptic-container">
+      <svg class="ecg-svg-base" viewBox="0 0 400 85" preserveAspectRatio="none">
+        <path id="static-p" class="ecg-static-path" d=""></path>
+        <path id="dynamic-p" class="ecg-dynamic-path" d=""></path>
+      </svg>
+    </div>
+  </div>
+
+  <script>
+    const instruction = document.getElementById('instruction');
+    const storyDisplay = document.getElementById('story-display');
+    const holdTarget = document.getElementById('hold-target');
+    const cardBox = document.getElementById('card-box');
+    const heartWrap = document.getElementById('heart-wrap');
+    const hapticContainer = document.getElementById('haptic-container');
+    const bgImg = document.getElementById('bg-img');
+    const galaxy = document.getElementById('galaxy');
+    const bgMusic = document.getElementById('bg-music');
+    const staticPath = document.getElementById('static-p');
+    const dynamicPath = document.getElementById('dynamic-p');
+
+    const storyStages = [
+      "هەست بە لێدانی دڵم دەکەیت؟...",
+      "ئەم دڵە تەنیا بۆ تۆ لێ دەدات...",
+      "خۆشم دەوێیت...",
+      "خۆشەویسترین کەسی ژیانم...\n\nلە نێو ئەو هەموو تاریکییەی ژیاندا، تۆ بوویت بەو شەمەیەی دڵم ڕووناک کردەوە. لەو ڕۆژەوەی ناسیم، هەموو شتێک ڕەنگێکی تر وەریگرت.\n\nئەگەر شەو هێمنی خۆی هەبێت، ئەوا ناوی تۆی تێدایە... و ئەگەر دڵم لێبدات، ئەوا تەنیا بۆ تۆیە. زۆرم خۆشدەوێیت... بە قووڵی، بە ئارامی، بە هەموو بوونم..."
+    ];
+
+    let currentStage = 0;
+    let stageInterval = null;
+    let particleInterval = null;
+    let isHolding = false;
+    let typingTimeout = null;
+
+    function generateRandomEcgPath() {
+      const centerY = 42;
+      let path = `M 0 ${centerY} L 30 ${centerY} `;
+      const segments = [80, 190, 300];
+
+      segments.forEach((startX) => {
+        const p1 = startX;
+        const p2 = startX + 10;
+        const p3 = startX + 20;
+        const p4 = startX + 30;
+        const p5 = startX + 42;
+
+        const highPulse = Math.floor(Math.random() * 18) + 8;
+        const lowPulse = Math.floor(Math.random() * 20) + 56;
+
+        path += `L ${p1} ${centerY}
+                 L ${p2} ${highPulse}
+                 L ${p3} ${lowPulse}
+                 L ${p4} ${centerY - 4}
+                 L ${p5} ${centerY} `;
+      });
+
+      path += `L 400 ${centerY}`;
+
+      staticPath.setAttribute('d', path);
+      dynamicPath.setAttribute('d', path);
+    }
+
+    dynamicPath.addEventListener('animationiteration', generateRandomEcgPath);
+
+    function createGalaxy() {
+      galaxy.innerHTML = "";
+
+      for (let i = 0; i < 34; i++) {
+        const el = document.createElement('div');
+        const isHeart = Math.random() > 0.6;
+
+        el.classList.add(isHeart ? 'space-heart' : 'star');
+
+        if (isHeart) {
+          el.textContent = Math.random() > 0.4 ? '🖤' : '🌹';
+          el.style.fontSize = `${Math.random() * 10 + 10}px`;
+        } else {
+          const size = Math.random() * 3 + 1.5;
+          el.style.width = `${size}px`;
+          el.style.height = `${size}px`;
+          el.style.background = `rgba(255, ${Math.floor(Math.random() * 40) + 180}, ${Math.floor(Math.random() * 55) + 190}, ${Math.random() * 0.45 + 0.22})`;
         }
 
-        // هەر کاتێک ئەنیمەیشنی ڕووناکییەکە دووبارە دەبێتەوە، نەخشی هێڵەکە بە تەواوی دەگۆڕێت بۆ شێوازێکی نوێ
-        dynamicPath.addEventListener('animationiteration', () => {
-            generateRandomEcgPath();
-        });
+        el.style.left = `${Math.random() * 100}vw`;
+        el.style.top = `${Math.random() * 100}vh`;
+        el.style.animationDelay = `${Math.random() * 8}s`;
+        el.style.animationDuration = `${Math.random() * 5 + 7}s`;
 
-        function createGalaxy() {
-            galaxy.innerHTML = "";
-            for(let i=0; i<30; i++) {
-                let element = document.createElement('div');
-                let isHeart = Math.random() > 0.6;
-                element.classList.add(isHeart ? 'space-heart' : 'star');
-                if(isHeart) {
-                    element.innerHTML = Math.random() > 0.5 ? '💗' : '✨';
-                    element.style.background = "none";
-                } else {
-                    element.style.background = `rgba(255, ${Math.floor(Math.random()*55)+200}, ${Math.floor(Math.random()*55)+200}, ${Math.random()*0.7+0.3})`;
-                }
-                let size = Math.random() * (isHeart ? 14 : 4) + 2;
-                element.style.width = size + 'px';
-                element.style.height = size + 'px';
-                element.style.left = Math.random() * 100 + 'vw';
-                element.style.animationDelay = Math.random() * 8 + 's';
-                element.style.animationDuration = (Math.random() * 5 + 7) + 's';
-                galaxy.appendChild(element);
-            }
-        }
-        createGalaxy();
+        galaxy.appendChild(el);
+      }
+    }
 
-        const storyStages = [
-            "هەست بە لێدانی دڵم دەکەیت؟...",
-            "ئەم دڵە تەنیا بۆ تۆ لێ دەدات...",
-            "خۆشم دەوێیت...",
-            "خۆشەویسترین کەسی ژیانم...\n\nئەو دڵەی ئێستا هەستت پێکرد، لە ساتی بینینی تۆوە ئیتر موڵکی من نییە! تۆ بوویت بەو خوێنەی بە دەمارەکانمدا دەگەڕێت و بوویت بە ڕووناکی بۆ تاریکاییەکانی ڕۆحم.\n\nگەر هەموو تەمەنم یەک چرکە بێت، دەمهەوێت ئەو چرکەیە لەناو قووڵایی چاوەکانی تۆدا بەسەر ببەم. زۆرم خۆشدەوێیت، هێندەی ئەو ترپانەی لە دڵم دا لێدەدات..."
-        ];
+    createGalaxy();
 
-        let currentStage = 0;
-        let stageInterval = null;
-        let particleInterval = null;
-        let isHolding = false;
+    function clearTyping() {
+      if (typingTimeout) {
+        clearTimeout(typingTimeout);
+        typingTimeout = null;
+      }
+    }
 
-        function typeWriter(text, element, speed = 35) {
-            element.innerHTML = "";
-            element.classList.add("typing-effect");
-            let i = 0;
-            function type() {
-                if (i < text.length) {
-                    if (text.substr(i, 2) === "\n") {
-                        element.innerHTML += "<br>";
-                        i += 2;
-                    } else {
-                        element.innerHTML += text.charAt(i);
-                        i++;
-                    }
-                    setTimeout(type, speed);
-                }
-            }
-            type();
+    function typeWriter(text, element, speed = 35) {
+      clearTyping();
+      element.innerHTML = "";
+      element.classList.add("typing-effect");
+
+      let i = 0;
+
+      function type() {
+        if (i >= text.length) return;
+
+        if (text.charAt(i) === "\n") {
+          element.appendChild(document.createElement("br"));
+        } else {
+          element.append(text.charAt(i));
         }
 
-        function progressStages() {
-            if (currentStage < storyStages.length - 1) {
-                currentStage++;
-                storyDisplay.style.opacity = 0;
-                
-                setTimeout(() => {
-                    if (currentStage === 3) {
-                        instruction.innerText = "بۆ هەمیشە... ✨";
-                        clearInterval(stageInterval);
-                        
-                        heartWrap.style.transform = "scale(0)";
-                        setTimeout(() => { heartWrap.style.display = "none"; }, 400);
+        i++;
+        typingTimeout = setTimeout(type, speed);
+      }
 
-                        // یەکەم نەخشی داینامیکی دروست دەکەین و مۆنیتەرەکە پیشان دەدەین
-                        generateRandomEcgPath();
-                        hapticContainer.style.display = "flex";
+      type();
+    }
 
-                        bgImg.style.opacity = "1";
-                        storyDisplay.classList.add("text-glass-mode");
-                        document.body.style.background = "radial-gradient(circle at center, #3d101f 0%, #120308 70%, #000000 100%)";
-                        cardBox.style.background = "rgba(0, 0, 0, 0.25)";
-                        cardBox.style.boxShadow = "0 30px 70px rgba(255, 77, 109, 0.2)";
+    function setStageText(text) {
+      storyDisplay.classList.remove("typing-effect");
+      storyDisplay.textContent = text;
+    }
 
-                        storyDisplay.style.opacity = 1;
-                        typeWriter(storyStages[currentStage], storyDisplay, 35);
-                    } else {
-                        storyDisplay.innerText = storyStages[currentStage];
-                        storyDisplay.style.opacity = 1;
-                        
-                        if (currentStage === 1) {
-                            instruction.innerText = "ئەم دڵە تەنیا بۆ تۆ لێ دەدات... 💕";
-                        } else if (currentStage === 2) {
-                            instruction.innerText = "خۆشم دەوێیت... 💖";
-                        }
-                    }
-                }, 200);
-            }
+    function activateFinalScene() {
+      instruction.innerText = "بۆ هەمیشە... 🌹";
+      heartWrap.style.transform = "scale(0.75)";
+      heartWrap.style.opacity = "0";
+
+      setTimeout(() => {
+        heartWrap.style.display = "none";
+      }, 420);
+
+      generateRandomEcgPath();
+      hapticContainer.style.display = "flex";
+      bgImg.style.opacity = "1";
+      storyDisplay.classList.add("text-glass-mode");
+      cardBox.classList.add("final-mode");
+
+      document.body.style.background =
+        "radial-gradient(circle at 50% 18%, rgba(255,79,122,0.14), transparent 18%), linear-gradient(145deg, #040203, #0c0407 40%, #16070d 70%, #050304)";
+
+      storyDisplay.style.opacity = "1";
+      typeWriter(storyStages[3], storyDisplay, 34);
+    }
+
+    function progressStages() {
+      if (currentStage >= storyStages.length - 1) return;
+
+      currentStage++;
+      storyDisplay.style.opacity = "0";
+
+      setTimeout(() => {
+        if (currentStage === 3) {
+          clearInterval(stageInterval);
+          activateFinalScene();
+        } else {
+          setStageText(storyStages[currentStage]);
+          storyDisplay.style.opacity = "1";
+
+          if (currentStage === 1) {
+            instruction.innerText = "ئەم دڵە تەنیا بۆ تۆ لێ دەدات... 🌙";
+          } else if (currentStage === 2) {
+            instruction.innerText = "خۆشم دەوێیت... 🥀";
+          }
         }
+      }, 180);
+    }
 
-        function spawnHeartParticle() {
-            const heart = document.createElement('div');
-            heart.classList.add('particle-heart');
-            heart.innerHTML = Math.random() > 0.4 ? '💗' : '✨';
-            heart.style.left = (holdTarget.parentNode.offsetLeft + 10 + Math.random() * 90) + 'px';
-            heart.style.top = (holdTarget.parentNode.offsetTop + 10 + Math.random() * 90) + 'px';
-            heart.style.fontSize = (Math.random() * 10 + 14) + 'px';
-            heart.style.animation = 'floatUp 0.9s ease-out forwards';
-            document.body.appendChild(heart);
-            setTimeout(() => heart.remove(), 900);
-        }
+    function spawnHeartParticle() {
+      const heart = document.createElement('div');
+      heart.classList.add('particle-heart');
+      heart.textContent = Math.random() > 0.5 ? '🖤' : '🌹';
 
-        function startHold(e) {
-            e.preventDefault();
-            if (isHolding) return;
-            isHolding = true;
+      const rect = holdTarget.getBoundingClientRect();
+      heart.style.left = `${rect.left + rect.width / 2 + (Math.random() * 48 - 24)}px`;
+      heart.style.top = `${rect.top + rect.height / 2 + (Math.random() * 28 - 14)}px`;
+      heart.style.fontSize = `${Math.random() * 10 + 14}px`;
+      heart.style.animation = 'floatUp .95s ease-out forwards';
 
-            bgMusic.play().catch(() => {});
-            holdTarget.style.borderColor = "#ff4d6d";
-            holdTarget.style.background = "rgba(255, 77, 109, 0.15)";
-            
-            stageInterval = setInterval(progressStages, 1500);
-            particleInterval = setInterval(spawnHeartParticle, 200);
-        }
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 950);
+    }
 
-        function endHold() {
-            if (!isHolding) return;
-            isHolding = false;
+    function startHold(e) {
+      e.preventDefault();
+      if (isHolding) return;
 
-            clearInterval(stageInterval);
-            clearInterval(particleInterval);
+      isHolding = true;
+      holdTarget.classList.add("holding");
+      bgMusic.play().catch(() => {});
 
-            if (currentStage < 3) {
-                currentStage = 0;
-                storyDisplay.style.opacity = 0;
-                storyDisplay.classList.remove("typing-effect");
-                storyDisplay.classList.remove("text-glass-mode");
-                document.body.style.background = "radial-gradient(circle at center, #2d1b24 0%, #120a0e 60%, #050204 100%)";
-                cardBox.style.background = "rgba(255, 238, 242, 0.06)";
-                bgImg.style.opacity = "0";
-                
-                setTimeout(() => {
-                    storyDisplay.innerText = storyStages[0];
-                    storyDisplay.style.opacity = 1;
-                }, 150);
+      if (currentStage < 3) {
+        stageInterval = setInterval(progressStages, 1500);
+        particleInterval = setInterval(spawnHeartParticle, 220);
+      }
+    }
 
-                instruction.innerText = "پەنجەت لێرە دابنێ و لای مەبە...💗";
-                holdTarget.style.borderColor = "rgba(255, 204, 213, 0.25)";
-                holdTarget.style.background = "rgba(255, 255, 255, 0.04)";
-            }
-        }
+    function resetScene() {
+      clearTyping();
+      clearInterval(stageInterval);
+      clearInterval(particleInterval);
 
-        holdTarget.addEventListener('mousedown', startHold);
-        holdTarget.addEventListener('mouseup', endHold);
-        holdTarget.addEventListener('mouseleave', endHold);
+      currentStage = 0;
+      storyDisplay.style.opacity = "0";
+      storyDisplay.classList.remove("typing-effect", "text-glass-mode");
+      cardBox.classList.remove("final-mode");
 
-        holdTarget.addEventListener('touchstart', startHold);
-        holdTarget.addEventListener('touchend', endHold);
-    </script>
+      document.body.style.background =
+        "radial-gradient(circle at 20% 20%, rgba(138, 36, 72, 0.25), transparent 24%), radial-gradient(circle at 80% 18%, rgba(255, 79, 122, 0.12), transparent 18%), radial-gradient(circle at 50% 85%, rgba(255, 120, 160, 0.09), transparent 24%), linear-gradient(145deg, #050304, #12070c 35%, #1b0a12 70%, #090406)";
+
+      bgImg.style.opacity = "0";
+      hapticContainer.style.display = "none";
+
+      setTimeout(() => {
+        setStageText(storyStages[0]);
+        storyDisplay.style.opacity = "1";
+      }, 160);
+
+      instruction.innerText = "پەنجەت لێرە دابنێ و لای مەبە... 🖤";
+    }
+
+    function endHold() {
+      if (!isHolding) return;
+      isHolding = false;
+
+      holdTarget.classList.remove("holding");
+      clearInterval(stageInterval);
+      clearInterval(particleInterval);
+
+      if (currentStage < 3) {
+        resetScene();
+      }
+    }
+
+    holdTarget.addEventListener('pointerdown', startHold);
+    holdTarget.addEventListener('pointerup', endHold);
+    holdTarget.addEventListener('pointerleave', endHold);
+    holdTarget.addEventListener('pointercancel', endHold);
+  </script>
 </body>
 </html>
