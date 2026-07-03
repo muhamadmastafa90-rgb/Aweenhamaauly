@@ -3,20 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>پەنجەت لێرە دابنێ...</title>
+    <title>بۆ تاقانەکەم 💗</title>
     <style>
+        /* هێنانی فۆنتی کوردی جوان و ناسک */
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;700&display=swap');
+
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
             user-select: none;
             -webkit-user-select: none;
+            font-family: 'Noto Sans Arabic', Tahoma, sans-serif;
         }
 
         body {
-            background-color: #000000;
-            color: #ffffff;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            /* باگراوندی سپی و پینکی ناسک لە شێوازی گرادێنت */
+            background: linear-gradient(135deg, #ffeef2 0%, #ffffff 50%, #ffdde2 100%);
+            color: #4a3b40;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -28,59 +32,82 @@
         .container {
             width: 100%;
             max-width: 400px;
-            padding: 20px;
+            padding: 25px;
             display: flex;
             flex-direction: column;
             align-items: center;
             text-align: center;
-            gap: 30px;
+            gap: 25px;
             z-index: 10;
+            background: rgba(255, 255, 255, 0.75);
+            border-radius: 30px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px rgba(255, 182, 193, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.8);
         }
 
-        /* Top instruction text */
+        /* دەقی سەرەوە */
         .instruction-text {
-            font-size: 16px;
-            color: #a0a0a0;
+            font-size: 15px;
+            color: #a38f96;
+            font-weight: 500;
             min-height: 24px;
             transition: opacity 0.3s ease;
         }
 
-        /* Main story text area */
+        /* دەقی سەرەکی ناوەڕاست */
         .main-text {
             font-size: 20px;
-            font-weight: bold;
+            font-weight: 700;
             line-height: 1.8;
-            min-height: 120px;
+            min-height: 140px;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: all 0.5s ease;
+            transition: opacity 0.3s ease;
             padding: 10px;
+            color: #333333;
         }
 
-        /* Interactive Fingerprint Circle */
+        /* دیزاینی نوێی تایپینگ بۆ دەقی کۆتایی */
+        .typing-effect {
+            text-align: justify;
+            text-align-last: center;
+            font-size: 15px !important;
+            font-weight: 600 !important;
+            line-height: 1.9;
+            color: #444444;
+        }
+
+        /* بازنەی دڵەکە */
         .fingerprint-area {
             position: relative;
-            width: 130px;
-            height: 130px;
+            width: 110px;
+            height: 110px;
             border-radius: 50%;
-            border: 2px dashed #444;
+            border: 2px dashed #ffb6c1;
             display: flex;
             justify-content: center;
             align-items: center;
             cursor: pointer;
             outline: none;
             -webkit-tap-highlight-color: transparent;
-            transition: border-color 0.3s ease;
+            background: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 5px 15px rgba(255, 182, 193, 0.2);
+            transition: all 0.3s ease;
         }
 
-        /* Outer pulse ring when holding */
+        .fingerprint-area:active {
+            transform: scale(0.95);
+        }
+
+        /* بازنەی لێدانی چواردەوری دڵەکە */
         .pulse-ring {
             position: absolute;
             width: 100%;
             height: 100%;
             border-radius: 50%;
-            border: 3px solid #ff4757;
+            border: 3px solid #ff4d6d;
             opacity: 0;
             transform: scale(1);
             pointer-events: none;
@@ -91,14 +118,14 @@
             100% { transform: scale(1.4); opacity: 0; }
         }
 
-        /* Central Icon (Fingerprint or Heart) */
+        /* ئایکۆنی ناوەڕاست */
         .icon {
-            font-size: 50px;
+            font-size: 45px;
             transition: transform 0.2s ease, color 0.3s ease;
             z-index: 2;
         }
 
-        /* Heart beating animation scale */
+        /* ئەنیمەیشنی لێدانی دڵ */
         @keyframes heartBeat {
             0% { transform: scale(1); }
             20% { transform: scale(1.15); }
@@ -108,10 +135,10 @@
             100% { transform: scale(1); }
         }
 
-        /* Background floating small hearts particles */
+        /* دڵە فڕیوەکانی پشتەوە */
         .particle-heart {
             position: absolute;
-            color: #ff4757;
+            color: #ff758f;
             opacity: 0;
             pointer-events: none;
             z-index: 1;
@@ -119,8 +146,8 @@
 
         @keyframes floatUp {
             0% { transform: translateY(0) scale(0.5); opacity: 0; }
-            50% { opacity: 0.6; }
-            100% { transform: translateY(-150px) scale(1.2); opacity: 0; }
+            50% { opacity: 0.8; }
+            100% { transform: translateY(-180px) scale(1.3); opacity: 0; }
         }
     </style>
 </head>
@@ -131,15 +158,15 @@
     </audio>
 
     <div class="container">
-        <div class="instruction-text" id="instruction">پەنجەت لێرە دابنێ و لای مەبە...</div>
+        <div class="instruction-text" id="instruction">پەنجەت لێرە دابنێ و لای مەبە...💗</div>
 
         <div class="main-text" id="story-display">
-            سەرت لێ شێواوە و نازانی چ دیارییەک پێشکەش بە خۆشەویستەکەت بکەیت؟
+            هەست بە لێدانی دڵم دەکەیت؟...
         </div>
 
         <div class="fingerprint-area" id="hold-target">
             <div class="pulse-ring" id="ring"></div>
-            <div class="icon" id="main-icon">☝️</div>
+            <div class="icon" id="main-icon">❤️</div>
         </div>
     </div>
 
@@ -151,9 +178,8 @@
         const ring = document.getElementById('ring');
         const bgMusic = document.getElementById('bg-music');
 
-        // Text stages from the exact video
+        // دەقەکان بەبێ دێڕی یەکەم (سەرت لێشێواوە لادرا)
         const storyStages = [
-            "سەرت لێ شێواوە و نازانی چ دیارییەک پێشکەش بە خۆشەویستەکەت بکەیت؟",
             "هەست بە لێدانی دڵم دەکەیت؟...",
             "ئەم دڵە تەنیا بۆ تۆ لێ دەدات...",
             "خۆشم دەوێیت...",
@@ -161,113 +187,122 @@
         ];
 
         let currentStage = 0;
-        let holdTimer = null;
         let stageInterval = null;
         let particleInterval = null;
         let isHolding = false;
 
-        // Function to trigger text progression smoothly
+        // ئەنیمەیشنی تایپینگ بۆ دەقی کۆتایی
+        function typeWriter(text, element, speed = 40) {
+            element.innerHTML = "";
+            element.classList.add("typing-effect");
+            let i = 0;
+            
+            // گۆڕینی لادانی دێڕەکان بۆ بی تێک نەچێت لە HTML
+            let formattedText = text.replace(/\n/g, "<br>");
+            
+            function type() {
+                if (i < text.length) {
+                    if (text.substr(i, 2) === "\n") {
+                        element.innerHTML += "<br>";
+                        i += 2;
+                    } else {
+                        element.innerHTML += text.charAt(i);
+                        i++;
+                    }
+                    setTimeout(type, speed);
+                }
+            }
+            type();
+        }
+
         function progressStages() {
             if (currentStage < storyStages.length - 1) {
                 currentStage++;
                 storyDisplay.style.opacity = 0;
                 
                 setTimeout(() => {
-                    storyDisplay.innerText = storyStages[currentStage];
-                    storyDisplay.style.opacity = 1;
-                    
-                    // Custom adjustments based on the video flow
-                    if (currentStage === 1) {
-                        instruction.innerText = "هەست بە لێدانی دڵم دەکەیت؟...";
-                        mainIcon.innerText = "❤️";
-                        mainIcon.style.color = "#ff4757";
-                        mainIcon.style.animation = "heartBeat 1.2s infinite linear";
-                        ring.style.animation = "pulse 1.2s infinite linear";
-                        holdTarget.style.borderColor = "#ff4757";
-                    } else if (currentStage === 2) {
-                        instruction.innerText = "ئەم دڵە تەنیا بۆ تۆ لێ دەدات...";
-                        mainIcon.style.animation = "heartBeat 0.8s infinite linear";
-                        ring.style.animation = "pulse 0.8s infinite linear";
-                    } else if (currentStage === 3) {
-                        instruction.innerText = "خۆشم دەوێیت...";
-                        mainIcon.style.animation = "heartBeat 0.5s infinite linear";
-                        ring.style.animation = "pulse 0.5s infinite linear";
-                    } else if (currentStage === 4) {
-                        instruction.innerText = ""; // Hide hint text at the end
-                        storyDisplay.style.fontSize = "16px";
-                        storyDisplay.style.textAlign = "justify";
-                        storyDisplay.style.whiteSpace = "pre-line";
+                    // ئەگەر قۆناغی کۆتایی بوو، بە تایپینگ دایبنێ
+                    if (currentStage === 3) {
+                        instruction.innerText = "بۆ هەمیشە... ✨";
+                        mainIcon.style.animation = "heartBeat 0.35s infinite linear";
+                        ring.style.animation = "pulse 0.35s infinite linear";
+                        clearInterval(stageInterval); // وەستاندنی کاتەکە چونکە گەیشتە کۆتایی
                         
-                        // Final climax state
-                        mainIcon.style.animation = "heartBeat 0.4s infinite linear";
-                        ring.style.animation = "pulse 0.4s infinite linear";
-                        clearInterval(stageInterval); // Stop automatic changing once reached end
+                        storyDisplay.style.opacity = 1;
+                        typeWriter(storyStages[currentStage], storyDisplay, 35); // خێرایی تایپینگ (٣٥ میلی چرکە)
+                    } else {
+                        storyDisplay.innerText = storyStages[currentStage];
+                        storyDisplay.style.opacity = 1;
+                        
+                        // خێراتر کردنی لێدانی دڵ لە هەر قۆناغێکدا
+                        if (currentStage === 1) {
+                            instruction.innerText = "ئەم دڵە تەنیا بۆ تۆ لێ دەدات... 💕";
+                            mainIcon.style.animation = "heartBeat 0.7s infinite linear";
+                            ring.style.animation = "pulse 0.7s infinite linear";
+                        } else if (currentStage === 2) {
+                            instruction.innerText = "خۆشم دەوێیت... 💖";
+                            mainIcon.style.animation = "heartBeat 0.5s infinite linear";
+                            ring.style.animation = "pulse 0.5s infinite linear";
+                        }
                     }
-                }, 400);
+                }, 300);
             }
         }
 
-        // Generate tiny floating hearts while holding
+        // دروستکردنی دڵە فڕیوە پینکییەکان
         function spawnHeartParticle() {
             const heart = document.createElement('div');
             heart.classList.add('particle-heart');
-            heart.innerHTML = '❤️';
-            heart.style.left = (holdTarget.offsetLeft + Math.random() * 130) + 'px';
-            heart.style.top = (holdTarget.offsetTop + Math.random() * 130) + 'px';
-            heart.style.fontSize = (Math.random() * 12 + 10) + 'px';
-            heart.style.animation = 'floatUp 1.5s ease-out forwards';
+            heart.innerHTML = Math.random() > 0.5 ? '💗' : '❤️';
+            heart.style.left = (holdTarget.offsetLeft + 10 + Math.random() * 90) + 'px';
+            heart.style.top = (holdTarget.offsetTop + 10 + Math.random() * 90) + 'px';
+            heart.style.fontSize = (Math.random() * 12 + 12) + 'px';
+            heart.style.animation = 'floatUp 1.2s ease-out forwards';
             document.body.appendChild(heart);
-            setTimeout(() => heart.remove(), 1500);
+            setTimeout(() => heart.remove(), 1200);
         }
 
-        // Handle Hold Start
+        // دەستپێکردنی داگرتن
         function startHold(e) {
             e.preventDefault();
             if (isHolding) return;
             isHolding = true;
 
-            // Try to play audio on interaction
             bgMusic.play().catch(() => {});
-
-            // Visual feedback
             ring.style.opacity = "1";
-            
-            // Set initial delays matching video timing
-            stageInterval = setInterval(progressStages, 3500);
-            particleInterval = setInterval(spawnHeartParticle, 400);
+            mainIcon.style.animation = "heartBeat 1s infinite linear";
+            ring.style.animation = "pulse 1s infinite linear";
+
+            // کاتی گۆڕینی نێوان دەقەکان کەمکراوەتەوە بۆ ٢ چرکە و نیو (2500ms) بۆ ئەوەی خێرا بێت
+            stageInterval = setInterval(progressStages, 2500);
+            particleInterval = setInterval(spawnHeartParticle, 300);
         }
 
-        // Handle Hold End (Reset to initial state if released early)
+        // بەردانی دەست (ڕیست بوونەوە ئەگەر پێش کۆتایی بەری بدات)
         function endHold() {
             if (!isHolding) return;
             isHolding = false;
 
-            // Clear active timers
             clearInterval(stageInterval);
             clearInterval(particleInterval);
 
-            // Reset UI smoothly unless they fully completed the script
-            if (currentStage < 4) {
+            if (currentStage < 3) {
                 currentStage = 0;
                 storyDisplay.style.opacity = 0;
+                storyDisplay.classList.remove("typing-effect");
                 setTimeout(() => {
                     storyDisplay.innerText = storyStages[0];
                     storyDisplay.style.opacity = 1;
-                    storyDisplay.style.fontSize = "20px";
-                    storyDisplay.style.textAlign = "center";
-                }, 300);
+                }, 200);
 
-                instruction.innerText = "پەنجەت لێرە دابنێ و لای مەبە...";
-                mainIcon.innerText = "☝️";
-                mainIcon.style.color = "#ffffff";
+                instruction.innerText = "پەنجەت لێرە دابنێ و لای مەبە...💗";
                 mainIcon.style.animation = "none";
                 ring.style.animation = "none";
                 ring.style.opacity = "0";
-                holdTarget.style.borderColor = "#444";
             }
         }
 
-        // Event listeners supporting both Desktop & Mobile Devices
+        // بەستنەوە بە ماوس و شاشەی لەمس
         holdTarget.addEventListener('mousedown', startHold);
         holdTarget.addEventListener('mouseup', endHold);
         holdTarget.addEventListener('mouseleave', endHold);
