@@ -17,7 +17,6 @@
         }
 
         body {
-            /* پاشبنەمایەکی گەردوونی و قووڵ تێکەڵ بە ڕەنگی پینکی گەرم */
             background: radial-gradient(circle at center, #2d1b24 0%, #120a0e 60%, #050204 100%);
             color: #ffffff;
             display: flex;
@@ -26,7 +25,6 @@
             min-height: 100vh;
             overflow: hidden;
             position: relative;
-            transition: background 1.5s ease;
         }
 
         /* گەردوون و ئەستێرە جوڵاوەکان */
@@ -55,7 +53,7 @@
             100% { transform: translateY(-10vh) scale(1.2) rotate(360deg); opacity: 0; }
         }
 
-        /* دیزاینی سەرەکی کارتەکە */
+        /* کارتەکە */
         .container {
             width: 90%;
             max-width: 400px;
@@ -98,7 +96,6 @@
             text-shadow: 0 2px 15px rgba(255, 255, 255, 0.2);
         }
 
-        /* ستاینی تایپینگی پێشکەوتوو */
         .typing-effect {
             text-align: justify;
             text-align-last: center;
@@ -109,7 +106,7 @@
             text-shadow: 0 0 10px rgba(255, 182, 193, 0.2);
         }
 
-        /* بەشی دڵەکە و شەپۆلە ڕیتمییەکان */
+        /* بەشی دڵەکە */
         .heart-wrapper {
             position: relative;
             width: 120px;
@@ -120,7 +117,6 @@
             transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        /* شەپۆلی بازنەیی سەرەتایی */
         .heart-wave {
             position: absolute;
             width: 100%;
@@ -161,7 +157,6 @@
             display: inline-block;
         }
 
-        /* لێدانی زۆر نەرم و پڕۆفیشناڵ بۆ دڵەکە */
         @keyframes hapticBeat {
             0% { transform: scale(1); }
             15% { transform: scale(1.25); }
@@ -171,7 +166,7 @@
             100% { transform: scale(1); }
         }
 
-        /* 📈 هێڵی تەختیلی درێژ (ECG Waveform Line) */
+        /* 📈 هێڵی لێدانی دڵ کە بە بەردەوامی دەڕوات و دەجوڵێت (Infinite Rolling ECG) */
         .haptic-line-container {
             width: 100%;
             height: 60px;
@@ -180,33 +175,30 @@
             align-items: center;
             overflow: hidden;
             margin-top: 10px;
+            position: relative;
         }
 
         .haptic-svg {
-            width: 100%;
+            width: 200%; /* بۆ ئەوەی ڕووبەری جوڵەکەی هەبێت */
             height: 100%;
+            position: absolute;
+            right: 0;
+            animation: moveEcgLine 2s infinite linear;
+        }
+
+        /* ئەنیمەیشنی ڕۆیشتن و ڕاکردنی هێڵەکە بەبێ بەرز و نزمی جێگیر */
+        @keyframes moveEcgLine {
+            0% { transform: translateX(0%); }
+            100% { transform: translateX(50%); }
         }
 
         .ecg-path {
             stroke: #ff4d6d;
             stroke-width: 3;
             fill: none;
-            stroke-dasharray: 1000;
-            stroke-dashoffset: 1000;
+            filter: drop-shadow(0 0 5px #ff4d6d);
         }
 
-        @keyframes drawEcg {
-            to { stroke-dashoffset: 0; }
-        }
-
-        /* لێدانی بەرز و نزمی شەپۆلەکە */
-        @keyframes pulseEcg {
-            0% { transform: scaleY(1); filter: drop-shadow(0 0 2px #ff4d6d); }
-            50% { transform: scaleY(1.5); filter: drop-shadow(0 0 8px #ff758f); }
-            100% { transform: scaleY(1); filter: drop-shadow(0 0 2px #ff4d6d); }
-        }
-
-        /* دڵە فڕیوەکانی دەوری پەنجە */
         .particle-heart {
             position: absolute;
             color: #ff758f;
@@ -224,12 +216,10 @@
 </head>
 <body>
 
-    <!-- دۆسیەی دەنگی پشتەوە -->
     <audio id="bg-music" loop>
         <source src="1000054516.mp4" type="video/mp4">
     </audio>
 
-    <!-- باگراوندی گەردوونی جوڵاو -->
     <div class="galaxy-container" id="galaxy"></div>
 
     <div class="container" id="card-box">
@@ -239,7 +229,6 @@
             هەست بە لێدانی دڵم دەکەیت؟...
         </div>
 
-        <!-- بەشی ناوەڕاست (دڵ و شەپۆلەکان) -->
         <div class="heart-wrapper" id="heart-wrap">
             <div class="heart-wave" id="wave1"></div>
             <div class="heart-wave" id="wave2"></div>
@@ -248,10 +237,11 @@
             </div>
         </div>
 
-        <!-- 📈 هێڵی تەختیلی لێدانی دڵ (ECG) کە لە کاتی تایپینگ دەردەکەوێت -->
+        <!-- هێڵی لێدانی دڵ کە بە بەردەوامی دەڕوات (ڕاکردنی شەپۆلەکە) -->
         <div class="haptic-line-container" id="haptic-container">
-            <svg class="haptic-svg" viewBox="0 0 400 60">
-                <path class="ecg-path" id="ecg-line" d="M 0 30 L 120 30 L 130 15 L 140 45 L 150 5 L 160 55 L 170 25 L 180 35 L 190 30 L 400 30" />
+            <svg class="haptic-svg" viewBox="0 0 800 60" preserveAspectRatio="none">
+                <!-- درێژکردنەوەی نەخشی لێدانەکە بۆ ئەوەی لە جوڵەدا نەپچڕێت -->
+                <path class="ecg-path" d="M 0 30 L 120 30 L 130 15 L 140 45 L 150 5 L 160 55 L 170 25 L 180 35 L 190 30 L 520 30 L 530 15 L 540 45 L 550 5 L 560 55 L 570 25 L 580 35 L 590 30 L 800 30" />
             </svg>
         </div>
     </div>
@@ -266,11 +256,9 @@
         const cardBox = document.getElementById('card-box');
         const heartWrap = document.getElementById('heart-wrap');
         const hapticContainer = document.getElementById('haptic-container');
-        const ecgLine = document.getElementById('ecg-line');
         const galaxy = document.getElementById('galaxy');
         const bgMusic = document.getElementById('bg-music');
 
-        // دروستکردنی ئەستێرە و دڵەکانی ناو گەردوون بە شێوازێکی پڕۆفیشناڵ
         function createGalaxy() {
             galaxy.innerHTML = "";
             for(let i=0; i<30; i++) {
@@ -294,11 +282,12 @@
         }
         createGalaxy();
 
+        // دەقە ڕاستکراوەکە بەپێی داواکارییەکەت
         const storyStages = [
             "هەست بە لێدانی دڵم دەکەیت؟...",
             "ئەم دڵە تەنیا بۆ تۆ لێ دەدات...",
             "خۆشم دەوێیت...",
-            "خۆشەویسترین کەسی ژیانم...\n\nئەو دڵەی ئێستا هەستت پێکرد، لە ساتی بینینی تۆوە ئیتر موڵکی من نییە! تۆ بوویت بەو خوێنەی بە دەمارەکانمدا دەگەڕێت و بوویت بە ڕووناکی بۆ تاریکاییەکانی ڕۆحم.\n\nگەر هەموو تەمەنم یەک چرکە بێت، دەمهەوێت ئەو چرکەیە لەناو قووڵایی چاوەکانی تۆدا بەسەر ببەم. زۆرم خۆشدەوێیت، هێندەی هەموو ئەو تیرانەی کە تا کۆتایی تەمەنم لە سنگمدا لێ دەدەن..."
+            "خۆشەویسترین کەسی ژیانم...\n\nئەو دڵەی ئێستا هەستت پێکرد، لە ساتی بینینی تۆوە ئیتر موڵکی من نییە! تۆ بوویت بەو خوێنەی بە دەمارەکانمدا دەگەڕێت و بوویت بە ڕووناکی بۆ تاریکاییەکانی ڕۆحم.\n\nگەر هەموو تەمەنم یەک چرکە بێت، دەمهەوێت ئەو چرکەیە لەناو قووڵایی چاوەکانی تۆدا بەسەر ببەم. زۆرم خۆشدەوێیت، هێندەی ئەو ترپانەی لە سنگم دا لێدەدات..."
         ];
 
         let currentStage = 0;
@@ -306,7 +295,6 @@
         let particleInterval = null;
         let isHolding = false;
 
-        // ئەنیمەیشنی تایپینگی دەقی کۆتایی
         function typeWriter(text, element, speed = 35) {
             element.innerHTML = "";
             element.classList.add("typing-effect");
@@ -336,15 +324,13 @@
                         instruction.innerText = "بۆ هەمیشە... ✨";
                         clearInterval(stageInterval);
                         
-                        // ١. نەهێشتن و شاردنەوەی دڵەکە بە تەواوی
+                        // شاردنەوەی دڵەکە
                         heartWrap.style.transform = "scale(0)";
                         setTimeout(() => { heartWrap.style.display = "none"; }, 500);
 
-                        // ٢. چالاککردنی هێڵی تەختیلی درێژ (ECG) بە لێدانی بەرز و نزم
+                        // پیشاندانی هێڵی لێدانی دڵ کە دەڕوات و ڕادەکات
                         hapticContainer.style.display = "flex";
-                        ecgLine.style.animation = "drawEcg 1.5s ease forwards, pulseEcg 0.6s infinite ease-in-out alternate";
 
-                        // ٣. گۆڕینی پاشبنەمای گەردوون بۆ دۆخێکی قووڵتر و ڕۆمانسیتر
                         document.body.style.background = "radial-gradient(circle at center, #421223 0%, #17050c 70%, #000000 100%)";
                         cardBox.style.background = "rgba(255, 255, 255, 0.08)";
                         cardBox.style.boxShadow = "0 30px 70px rgba(255, 77, 109, 0.15)";
@@ -396,7 +382,6 @@
             wave1.style.animation = "waveAnimate 0.9s infinite linear";
             wave2.style.animation = "waveAnimate 0.9s infinite linear 0.45s";
 
-            // کاتەکە کەم کراوەتەوە بۆ تەنها (1500ms) بۆ هەر دەقێک بۆ ئەوەی زۆر خێرا بێت
             stageInterval = setInterval(progressStages, 1500);
             particleInterval = setInterval(spawnHeartParticle, 200);
         }
