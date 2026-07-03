@@ -64,18 +64,18 @@
             text-align: center;
             gap: 25px;
             z-index: 10;
-            background: rgba(255, 238, 242, 0.06);
+            background: rgba(255, 238, 242, 0.04);
             border-radius: 30px;
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(255, 182, 193, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), inset 0 0 20px rgba(255, 182, 193, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.08);
             position: relative;
             overflow: hidden;
             transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        /* شوێنی وێنەی پاشبنەمای سوپڕایز لە کۆتاییدا */
+        /* وێنەی پاشبنەمای سوپڕایز لە کۆتاییدا */
         .card-bg-image {
             position: absolute;
             top: 0;
@@ -87,8 +87,8 @@
             background-position: center;
             opacity: 0;
             z-index: -1;
-            transition: opacity 2s ease;
-            filter: brightness(0.4) blur(1px);
+            transition: opacity 2.5s ease;
+            filter: brightness(0.35) blur(0.5px);
         }
 
         .instruction-text {
@@ -97,7 +97,7 @@
             font-weight: 500;
             min-height: 24px;
             letter-spacing: 0.5px;
-            text-shadow: 0 2px 10px rgba(255, 77, 109, 0.3);
+            text-shadow: 0 2px 10px rgba(255, 77, 109, 0.4);
             z-index: 2;
         }
 
@@ -109,11 +109,21 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: opacity 0.2s ease;
-            padding: 10px;
+            transition: all 0.5s ease;
+            padding: 15px;
             color: #ffffff;
             text-shadow: 0 2px 15px rgba(255, 255, 255, 0.2);
             z-index: 2;
+            border-radius: 20px;
+        }
+
+        /* دیزاینی شووشەیی بۆ نووسینەکە کاتێک وێنەکە دێت */
+        .text-glass-mode {
+            background: rgba(0, 0, 0, 0.45);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
         }
 
         .typing-effect {
@@ -143,22 +153,22 @@
             width: 100px;
             height: 100px;
             border-radius: 50%;
-            border: 2px solid rgba(255, 204, 213, 0.3);
+            border: 2px solid rgba(255, 204, 213, 0.25);
             display: flex;
             justify-content: center;
             align-items: center;
             cursor: pointer;
             outline: none;
             -webkit-tap-highlight-color: transparent;
-            background: rgba(255, 255, 255, 0.05);
-            box-shadow: 0 8px 25px rgba(255, 77, 109, 0.2);
+            background: rgba(255, 255, 255, 0.04);
+            box-shadow: 0 8px 25px rgba(255, 77, 109, 0.15);
         }
 
         .icon {
             font-size: 45px;
         }
 
-        /* 📈 هێڵی تەختیلی زیندوو کە وەک دڵ لێدەدات و بە خێرایی دەڕوات (Realtime Heartbeat Monitor Effect) */
+        /* 📈 هێڵی تەختیلی واقیعی و ناڕێک */
         .haptic-line-container {
             width: 100%;
             height: 70px;
@@ -168,9 +178,9 @@
             overflow: hidden;
             margin-top: 10px;
             position: relative;
-            background: rgba(0, 0, 0, 0.15);
+            background: rgba(0, 0, 0, 0.3);
             border-radius: 15px;
-            border: 1px solid rgba(255, 77, 109, 0.1);
+            border: 1px solid rgba(255, 77, 109, 0.12);
             z-index: 2;
         }
 
@@ -179,7 +189,7 @@
             height: 100%;
             position: absolute;
             right: 0;
-            animation: moveEcgLine 1.8s infinite linear; /* خێراکردنی ڕاکردنی لێدانەکە */
+            animation: moveEcgLine 2.2s infinite linear;
         }
 
         @keyframes moveEcgLine {
@@ -191,13 +201,7 @@
             stroke: #ff4d6d;
             stroke-width: 3;
             fill: none;
-            filter: drop-shadow(0 0 6px #ff4d6d);
-        }
-
-        /* خاڵی لێدەری ڕاستەقینە لەسەر هێڵەکە */
-        .ecg-dot {
-            fill: #ffffff;
-            filter: drop-shadow(0 0 8px #ff4d6d);
+            filter: drop-shadow(0 0 5px #ff4d6d);
         }
 
         .particle-heart {
@@ -217,6 +221,7 @@
 </head>
 <body>
 
+    <!-- فایلی دەنگ و ڤیدیۆکە -->
     <audio id="bg-music" loop>
         <source src="1000054611.mp4" type="video/mp4">
     </audio>
@@ -238,9 +243,10 @@
             </div>
         </div>
 
+        <!-- 📈 لێدانی دڵ بە ئاستی ناڕێک و بەردەوام -->
         <div class="haptic-line-container" id="haptic-container">
-            <svg class="haptic-svg" viewBox="0 0 800 70" preserveAspectRatio="none">
-                <path class="ecg-path" d="M 0 35 L 80 35 L 90 20 L 100 50 L 110 5 L 120 65 L 130 30 L 140 40 L 150 35 L 240 35 L 250 20 L 260 50 L 270 5 L 280 65 L 290 30 L 300 40 L 310 35 L 400 35 L 480 35 L 490 20 L 500 50 L 510 5 L 520 65 L 530 30 L 540 40 L 550 35 L 640 35 L 650 20 L 660 50 L 670 5 L 680 65 L 690 30 L 700 40 L 710 35 L 800 35" />
+            <svg class="haptic-svg" viewBox="0 0 1000 70" preserveAspectRatio="none">
+                <path class="ecg-path" d="M 0 35 L 70 35 L 80 15 L 90 55 L 100 8 L 110 62 L 120 30 L 130 40 L 140 35 L 220 35 L 225 25 L 230 45 L 235 20 L 240 50 L 245 35 L 320 35 L 330 5 L 340 65 L 350 30 L 360 35 L 500 35 L 570 35 L 580 15 L 590 55 L 600 8 L 610 62 L 620 30 L 630 40 L 640 35 L 720 35 L 725 25 L 730 45 L 735 20 L 740 50 L 745 35 L 820 35 L 830 5 L 840 65 L 850 30 L 860 35 L 1000 35" />
             </svg>
         </div>
     </div>
@@ -320,18 +326,17 @@
                         instruction.innerText = "بۆ هەمیشە... ✨";
                         clearInterval(stageInterval);
                         
-                        // ١. نەهێشتنی دڵە گەورەکە
                         heartWrap.style.transform = "scale(0)";
                         setTimeout(() => { heartWrap.style.display = "none"; }, 400);
 
-                        // ٢. دەرکەوتنی تەختیلی ڕاستەقینە و لێدەری دڵ کە بە بەردەوامی ڕادەکات
                         hapticContainer.style.display = "flex";
 
-                        // ٣. چالاککردنی وێنەی سوپڕایز لە باگراونددا بە شێوازی فەید
+                        // چالاککردنی وێنە و شووشەی سەر دەقەکە
                         bgImg.style.opacity = "1";
+                        storyDisplay.classList.add("text-glass-mode");
                         document.body.style.background = "radial-gradient(circle at center, #3d101f 0%, #120308 70%, #000000 100%)";
-                        cardBox.style.background = "rgba(0, 0, 0, 0.4)";
-                        cardBox.style.boxShadow = "0 30px 70px rgba(255, 77, 109, 0.25)";
+                        cardBox.style.background = "rgba(0, 0, 0, 0.25)";
+                        cardBox.style.boxShadow = "0 30px 70px rgba(255, 77, 109, 0.2)";
 
                         storyDisplay.style.opacity = 1;
                         typeWriter(storyStages[currentStage], storyDisplay, 35);
@@ -385,6 +390,7 @@
                 currentStage = 0;
                 storyDisplay.style.opacity = 0;
                 storyDisplay.classList.remove("typing-effect");
+                storyDisplay.classList.remove("text-glass-mode");
                 document.body.style.background = "radial-gradient(circle at center, #2d1b24 0%, #120a0e 60%, #050204 100%)";
                 cardBox.style.background = "rgba(255, 238, 242, 0.06)";
                 bgImg.style.opacity = "0";
@@ -395,8 +401,8 @@
                 }, 150);
 
                 instruction.innerText = "پەنجەت لێرە دابنێ و لای مەبە...💗";
-                holdTarget.style.borderColor = "rgba(255, 204, 213, 0.3)";
-                holdTarget.style.background = "rgba(255, 255, 255, 0.05)";
+                holdTarget.style.borderColor = "rgba(255, 204, 213, 0.25)";
+                holdTarget.style.background = "rgba(255, 255, 255, 0.04)";
             }
         }
 
