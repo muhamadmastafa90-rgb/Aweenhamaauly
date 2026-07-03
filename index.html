@@ -27,7 +27,7 @@
             position: relative;
         }
 
-        /* باگراوندی گەردوونی */
+        /* گەردوونی پڕ لە ئەستێرە و دڵ */
         .galaxy-container {
             position: absolute;
             width: 100%;
@@ -70,7 +70,25 @@
             -webkit-backdrop-filter: blur(20px);
             box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(255, 182, 193, 0.1);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* شوێنی وێنەی پاشبنەمای سوپڕایز لە کۆتاییدا */
+        .card-bg-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('1000054531.jpg');
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            z-index: -1;
+            transition: opacity 2s ease;
+            filter: brightness(0.4) blur(1px);
         }
 
         .instruction-text {
@@ -80,6 +98,7 @@
             min-height: 24px;
             letter-spacing: 0.5px;
             text-shadow: 0 2px 10px rgba(255, 77, 109, 0.3);
+            z-index: 2;
         }
 
         .main-text {
@@ -94,6 +113,7 @@
             padding: 10px;
             color: #ffffff;
             text-shadow: 0 2px 15px rgba(255, 255, 255, 0.2);
+            z-index: 2;
         }
 
         .typing-effect {
@@ -106,7 +126,7 @@
             text-shadow: 0 0 10px rgba(255, 182, 193, 0.2);
         }
 
-        /* بەشی دڵەکە - لەرزینەکەی بە تەواوی لادراوە */
+        /* بەشی دڵەکە */
         .heart-wrapper {
             position: relative;
             width: 120px;
@@ -115,6 +135,7 @@
             justify-content: center;
             align-items: center;
             transition: all 0.6s ease;
+            z-index: 2;
         }
 
         .fingerprint-area {
@@ -131,24 +152,26 @@
             -webkit-tap-highlight-color: transparent;
             background: rgba(255, 255, 255, 0.05);
             box-shadow: 0 8px 25px rgba(255, 77, 109, 0.2);
-            z-index: 5;
         }
 
         .icon {
             font-size: 45px;
-            z-index: 6;
         }
 
-        /* 📈 هێڵی تەختیلی لێدانی دڵ (ECG Waveform) کە بە نەرمی دەڕوات */
+        /* 📈 هێڵی تەختیلی زیندوو کە وەک دڵ لێدەدات و بە خێرایی دەڕوات (Realtime Heartbeat Monitor Effect) */
         .haptic-line-container {
             width: 100%;
-            height: 50px;
+            height: 70px;
             display: none;
             justify-content: center;
             align-items: center;
             overflow: hidden;
             margin-top: 10px;
             position: relative;
+            background: rgba(0, 0, 0, 0.15);
+            border-radius: 15px;
+            border: 1px solid rgba(255, 77, 109, 0.1);
+            z-index: 2;
         }
 
         .haptic-svg {
@@ -156,7 +179,7 @@
             height: 100%;
             position: absolute;
             right: 0;
-            animation: moveEcgLine 2.5s infinite linear;
+            animation: moveEcgLine 1.8s infinite linear; /* خێراکردنی ڕاکردنی لێدانەکە */
         }
 
         @keyframes moveEcgLine {
@@ -166,9 +189,15 @@
 
         .ecg-path {
             stroke: #ff4d6d;
-            stroke-width: 2.5;
+            stroke-width: 3;
             fill: none;
-            filter: drop-shadow(0 0 4px #ff4d6d);
+            filter: drop-shadow(0 0 6px #ff4d6d);
+        }
+
+        /* خاڵی لێدەری ڕاستەقینە لەسەر هێڵەکە */
+        .ecg-dot {
+            fill: #ffffff;
+            filter: drop-shadow(0 0 8px #ff4d6d);
         }
 
         .particle-heart {
@@ -189,12 +218,14 @@
 <body>
 
     <audio id="bg-music" loop>
-        <source src="1000054516.mp4" type="video/mp4">
+        <source src="1000054611.mp4" type="video/mp4">
     </audio>
 
     <div class="galaxy-container" id="galaxy"></div>
 
     <div class="container" id="card-box">
+        <div class="card-bg-image" id="bg-img"></div>
+
         <div class="instruction-text" id="instruction">پەنجەت لێرە دابنێ و لای مەبە...💗</div>
 
         <div class="main-text" id="story-display">
@@ -208,8 +239,8 @@
         </div>
 
         <div class="haptic-line-container" id="haptic-container">
-            <svg class="haptic-svg" viewBox="0 0 800 60" preserveAspectRatio="none">
-                <path class="ecg-path" d="M 0 30 L 120 30 L 130 15 L 140 45 L 150 5 L 160 55 L 170 25 L 180 35 L 190 30 L 520 30 L 530 15 L 540 45 L 550 5 L 560 55 L 570 25 L 580 35 L 590 30 L 800 30" />
+            <svg class="haptic-svg" viewBox="0 0 800 70" preserveAspectRatio="none">
+                <path class="ecg-path" d="M 0 35 L 80 35 L 90 20 L 100 50 L 110 5 L 120 65 L 130 30 L 140 40 L 150 35 L 240 35 L 250 20 L 260 50 L 270 5 L 280 65 L 290 30 L 300 40 L 310 35 L 400 35 L 480 35 L 490 20 L 500 50 L 510 5 L 520 65 L 530 30 L 540 40 L 550 35 L 640 35 L 650 20 L 660 50 L 670 5 L 680 65 L 690 30 L 700 40 L 710 35 L 800 35" />
             </svg>
         </div>
     </div>
@@ -218,10 +249,10 @@
         const instruction = document.getElementById('instruction');
         const storyDisplay = document.getElementById('story-display');
         const holdTarget = document.getElementById('hold-target');
-        const mainIcon = document.getElementById('main-icon');
         const cardBox = document.getElementById('card-box');
         const heartWrap = document.getElementById('heart-wrap');
         const hapticContainer = document.getElementById('haptic-container');
+        const bgImg = document.getElementById('bg-img');
         const galaxy = document.getElementById('galaxy');
         const bgMusic = document.getElementById('bg-music');
 
@@ -289,16 +320,18 @@
                         instruction.innerText = "بۆ هەمیشە... ✨";
                         clearInterval(stageInterval);
                         
-                        // ١. نەهێشتنی دڵەکە بە تەواوی
+                        // ١. نەهێشتنی دڵە گەورەکە
                         heartWrap.style.transform = "scale(0)";
                         setTimeout(() => { heartWrap.style.display = "none"; }, 400);
 
-                        // ٢. دەرکەوتنی هێڵی تەختیلی لێدانی دڵ
+                        // ٢. دەرکەوتنی تەختیلی ڕاستەقینە و لێدەری دڵ کە بە بەردەوامی ڕادەکات
                         hapticContainer.style.display = "flex";
 
-                        document.body.style.background = "radial-gradient(circle at center, #421223 0%, #17050c 70%, #000000 100%)";
-                        cardBox.style.background = "rgba(255, 255, 255, 0.08)";
-                        cardBox.style.boxShadow = "0 30px 70px rgba(255, 77, 109, 0.2)";
+                        // ٣. چالاککردنی وێنەی سوپڕایز لە باگراونددا بە شێوازی فەید
+                        bgImg.style.opacity = "1";
+                        document.body.style.background = "radial-gradient(circle at center, #3d101f 0%, #120308 70%, #000000 100%)";
+                        cardBox.style.background = "rgba(0, 0, 0, 0.4)";
+                        cardBox.style.boxShadow = "0 30px 70px rgba(255, 77, 109, 0.25)";
 
                         storyDisplay.style.opacity = 1;
                         typeWriter(storyStages[currentStage], storyDisplay, 35);
@@ -354,6 +387,7 @@
                 storyDisplay.classList.remove("typing-effect");
                 document.body.style.background = "radial-gradient(circle at center, #2d1b24 0%, #120a0e 60%, #050204 100%)";
                 cardBox.style.background = "rgba(255, 238, 242, 0.06)";
+                bgImg.style.opacity = "0";
                 
                 setTimeout(() => {
                     storyDisplay.innerText = storyStages[0];
