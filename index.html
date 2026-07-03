@@ -117,7 +117,6 @@
             border-radius: 20px;
         }
 
-        /* دیزاینی شووشەیی بۆ نووسینەکە کاتێک وێنەکە دێت */
         .text-glass-mode {
             background: rgba(0, 0, 0, 0.45);
             backdrop-filter: blur(8px);
@@ -168,40 +167,52 @@
             font-size: 45px;
         }
 
-        /* 📈 هێڵی تەختیلی واقیعی و ناڕێک */
+        /* 🏥 سستەمی نوێی تەختیلی ڕاستەقینە (Hospital ECG Monitor Simulator) */
         .haptic-line-container {
             width: 100%;
-            height: 70px;
+            height: 75px;
             display: none;
             justify-content: center;
             align-items: center;
             overflow: hidden;
             margin-top: 10px;
             position: relative;
-            background: rgba(0, 0, 0, 0.3);
+            background: rgba(7, 2, 4, 0.6);
             border-radius: 15px;
-            border: 1px solid rgba(255, 77, 109, 0.12);
+            border: 1px solid rgba(255, 77, 109, 0.2);
             z-index: 2;
         }
 
-        .haptic-svg {
-            width: 200%;
-            height: 100%;
+        /* هێڵی سەرەکی جێگیرە مۆنیتەرەکە */
+        .ecg-svg-base {
             position: absolute;
-            right: 0;
-            animation: moveEcgLine 2.2s infinite linear;
+            width: 100%;
+            height: 100%;
+            left: 0;
+            top: 0;
         }
 
-        @keyframes moveEcgLine {
-            0% { transform: translateX(0%); }
-            100% { transform: translateX(50%); }
+        .ecg-static-path {
+            stroke: rgba(255, 77, 109, 0.15); /* هێڵی پشتەوە کاڵە وەک مۆنیتەری ڕاستەقینە */
+            stroke-width: 2.5;
+            fill: none;
         }
 
-        .ecg-path {
+        /* هێڵی بریقەداری ڕاکەر کە لێدانەکان ڕووناک دەکاتەوە */
+        .ecg-dynamic-path {
             stroke: #ff4d6d;
             stroke-width: 3;
             fill: none;
-            filter: drop-shadow(0 0 5px #ff4d6d);
+            stroke-dasharray: 1000;
+            stroke-dashoffset: 1000;
+            animation: hospitalScan 2.4s linear infinite;
+            filter: drop-shadow(0 0 6px #ff4d6d) drop-shadow(0 0 2px #ffffff);
+        }
+
+        /* ئەنیمەیشنی سکانەری نەخۆشخانە لە ڕاستەوە بۆ چەپ */
+        @keyframes hospitalScan {
+            0% { stroke-dashoffset: 1000; }
+            100% { stroke-dashoffset: 0; }
         }
 
         .particle-heart {
@@ -243,10 +254,12 @@
             </div>
         </div>
 
-        <!-- 📈 لێدانی دڵ بە ئاستی ناڕێک و بەردەوام -->
+        <!-- 🏥 تەختیلی ڕاستەقینەی مۆنیتەری نەخۆشخانە بە لێدانی جیاواز و واقیعی -->
         <div class="haptic-line-container" id="haptic-container">
-            <svg class="haptic-svg" viewBox="0 0 1000 70" preserveAspectRatio="none">
-                <path class="ecg-path" d="M 0 35 L 70 35 L 80 15 L 90 55 L 100 8 L 110 62 L 120 30 L 130 40 L 140 35 L 220 35 L 225 25 L 230 45 L 235 20 L 240 50 L 245 35 L 320 35 L 330 5 L 340 65 L 350 30 L 360 35 L 500 35 L 570 35 L 580 15 L 590 55 L 600 8 L 610 62 L 620 30 L 630 40 L 640 35 L 720 35 L 725 25 L 730 45 L 735 20 L 740 50 L 745 35 L 820 35 L 830 5 L 840 65 L 850 30 L 860 35 L 1000 35" />
+            <svg class="ecg-svg-base" viewBox="0 0 400 75" preserveAspectRatio="none">
+                <!-- نەخشی لێدانی دڵی واقیعی: هێڵێکی جێگیر کە ڕووناککەرەوەکە بەسەریدا تێدەپەڕێت -->
+                <path id="static-p" class="ecg-static-path" d="M 0 38 L 40 38 L 50 15 L 60 60 L 70 8 L 80 65 L 90 33 L 100 42 L 110 38 L 180 38 L 185 22 L 190 50 L 195 18 L 200 55 L 205 38 L 280 38 L 290 5 L 300 70 L 310 30 L 320 38 L 400 38" />
+                <path id="dynamic-p" class="ecg-dynamic-path" d="M 0 38 L 40 38 L 50 15 L 60 60 L 70 8 L 80 65 L 90 33 L 100 42 L 110 38 L 180 38 L 185 22 L 190 50 L 195 18 L 200 55 L 205 38 L 280 38 L 290 5 L 300 70 L 310 30 L 320 38 L 400 38" />
             </svg>
         </div>
     </div>
@@ -285,11 +298,12 @@
         }
         createGalaxy();
 
+        // وشەی "ترپانەی سنگم" لێرەدا گۆڕدرا بۆ "ترپانەی دڵم"
         const storyStages = [
             "هەست بە لێدانی دڵم دەکەیت؟...",
             "ئەم دڵە تەنیا بۆ تۆ لێ دەدات...",
             "خۆشم دەوێیت...",
-            "خۆشەویسترین کەسی ژیانم...\n\nئەو دڵەی ئێستا هەستت پێکرد، لە ساتی بینینی تۆوە ئیتر موڵکی من نییە! تۆ بوویت بەو خوێنەی بە دەمارەکانمدا دەگەڕێت و بوویت بە ڕووناکی بۆ تاریکاییەکانی ڕۆحم.\n\nگەر هەموو تەمەنم یەک چرکە بێت، دەمهەوێت ئەو چرکەیە لەناو قووڵایی چاوەکانی تۆدا بەسەر ببەم. زۆرم خۆشدەوێیت، هێندەی ئەو ترپانەی لە سنگم دا لێدەدات..."
+            "خۆشەویسترین کەسی ژیانم...\n\nئەو دڵەی ئێستا هەستت پێکرد، لە ساتی بینینی تۆوە ئیتر موڵکی من نییە! تۆ بوویت بەو خوێنەی بە دەمارەکانمدا دەگەڕێت و بوویت بە ڕووناکی بۆ تاریکاییەکانی ڕۆحم.\n\nگەر هەموو تەمەنم یەک چرکە بێت، دەمهەوێت ئەو چرکەیە لەناو قووڵایی چاوەکانی تۆدا بەسەر ببەم. زۆرم خۆشدەوێیت، هێندەی ئەو ترپانەی لە دڵم دا لێدەدات..."
         ];
 
         let currentStage = 0;
@@ -329,9 +343,9 @@
                         heartWrap.style.transform = "scale(0)";
                         setTimeout(() => { heartWrap.style.display = "none"; }, 400);
 
+                        // نیشاندانی تەختیلی مۆنیتەری نەخۆشخانەی واقیعی
                         hapticContainer.style.display = "flex";
 
-                        // چالاککردنی وێنە و شووشەی سەر دەقەکە
                         bgImg.style.opacity = "1";
                         storyDisplay.classList.add("text-glass-mode");
                         document.body.style.background = "radial-gradient(circle at center, #3d101f 0%, #120308 70%, #000000 100%)";
