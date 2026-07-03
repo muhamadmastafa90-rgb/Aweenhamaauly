@@ -55,6 +55,7 @@
       padding: 20px;
     }
 
+    /* ئۆپتیمایزکردنی بەشی Blur بۆ ڕێگریکردن لە لاگی باکگراوند */
     .ambient-blur,
     .ambient-blur::before,
     .ambient-blur::after {
@@ -64,6 +65,8 @@
       filter: blur(90px);
       pointer-events: none;
       z-index: 0;
+      will-change: transform;
+      transform: translate3d(0,0,0);
     }
 
     .ambient-blur {
@@ -96,8 +99,8 @@
     }
 
     @keyframes drift {
-      from { transform: translateY(0) translateX(0) scale(1); }
-      to   { transform: translateY(18px) translateX(10px) scale(1.08); }
+      from { transform: translate3d(0, 0, 0) scale(1); }
+      to   { transform: translate3d(10px, 18px, 0) scale(1.08); }
     }
 
     .galaxy-container {
@@ -113,6 +116,7 @@
       opacity: 0;
       animation: floatSpace linear infinite;
       will-change: transform, opacity;
+      transform: translate3d(0,0,0);
     }
 
     .star {
@@ -130,13 +134,13 @@
 
     @keyframes floatSpace {
       0% {
-        transform: translateY(110vh) scale(.45) rotate(0deg);
+        transform: translate3d(0, 110vh, 0) scale(.45) rotate(0deg);
         opacity: 0;
       }
       15% { opacity: .75; }
       85% { opacity: .75; }
       100% {
-        transform: translateY(-15vh) scale(1.08) rotate(360deg);
+        transform: translate3d(0, -15vh, 0) scale(1.08) rotate(360deg);
         opacity: 0;
       }
     }
@@ -442,18 +446,19 @@
       opacity: 0;
       pointer-events: none;
       z-index: 20;
+      will-change: transform, opacity;
       animation: floatUp .95s ease-out forwards;
       text-shadow: 0 0 12px rgba(255, 77, 136, 0.35);
     }
 
     @keyframes floatUp {
       0% {
-        transform: translateY(0) scale(.55);
+        transform: translate3d(0, 0, 0) scale(.55);
         opacity: 0;
       }
       25% { opacity: 1; }
       100% {
-        transform: translateY(-150px) scale(1.24);
+        transform: translate3d(0, -150px, 0) scale(1.24);
         opacity: 0;
       }
     }
@@ -514,7 +519,7 @@
     <div class="instruction-text" id="instruction">پەنجەت لێرە دابنێ و لای مەبە... 💞</div>
 
     <section class="main-text" id="story-display">
-      هەست بە لێدانی دڵم دەکەیت؟...
+      هەست بە لێدانی دڵم دەکەیت?...
     </section>
 
     <div class="progress-line" aria-hidden="true">
@@ -577,6 +582,7 @@
     let particleInterval = null;
     let typingTimeout = null;
     let finalRevealed = false;
+    let cachedRect = null; // پاشەکەوتکردنی شوێنی دوگمەکە بۆ ڕێگریکردن لە لاگ
 
     function generateRandomEcgPath() {
       const centerY = 44;
@@ -605,6 +611,7 @@
 
     function createGalaxy() {
       galaxy.innerHTML = "";
+      const fragment = document.createDocumentFragment(); // بەکارهێنانی فرێگمێنت بۆ باشترکردنی پێدانی داتا بە DOM
 
       for (let i = 0; i < 34; i++) {
         const element = document.createElement('div');
@@ -626,8 +633,9 @@
         element.style.top = Math.random() * 100 + 'vh';
         element.style.animationDuration = (Math.random() * 6 + 8) + 's';
         element.style.animationDelay = (Math.random() * 8) + 's';
-        galaxy.appendChild(element);
+        fragment.appendChild(element);
       }
+      galaxy.appendChild(fragment);
     }
 
     createGalaxy();
@@ -692,13 +700,15 @@
     }
 
     function spawnHeartParticle() {
-      const rect = holdTarget.getBoundingClientRect();
+      if (!cachedRect) return; // ئەگەر پێوانەکە نەبوو هیچی لێ مەکە
+      
       const particle = document.createElement('div');
       particle.className = 'particle-heart';
       particle.textContent = Math.random() > 0.35 ? '💗' : '✨';
 
-      particle.style.left = (rect.left + window.scrollX + rect.width / 2 + (Math.random() * 36 - 18)) + 'px';
-      particle.style.top = (rect.top + window.scrollY + rect.height / 2 + (Math.random() * 20 - 10)) + 'px';
+      // لێرەدا بەها پاشەکەوتکراوەکە بەکاردێت لەبری گۆڕینی بەردەوامی لایەنەکان
+      particle.style.left = (cachedRect.left + window.scrollX + cachedRect.width / 2 + (Math.random() * 36 - 18)) + 'px';
+      particle.style.top = (cachedRect.top + window.scrollY + cachedRect.height / 2 + (Math.random() * 20 - 10)) + 'px';
       particle.style.fontSize = (Math.random() * 10 + 14) + 'px';
 
       document.body.appendChild(particle);
@@ -752,6 +762,9 @@
       isHolding = true;
       holdStartTime = performance.now();
       holdTarget.classList.add('active');
+      
+      // تەنها لێرەدا یەکجار قەبارە و شوێن دەپێورێت
+      cachedRect = holdTarget.getBoundingClientRect();
 
       bgMusic.play().catch(() => {});
 
