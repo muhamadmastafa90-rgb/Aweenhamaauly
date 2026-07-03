@@ -27,7 +27,7 @@
             position: relative;
         }
 
-        /* گەردوون و ئەستێرە جوڵاوەکان */
+        /* باگراوندی گەردوونی */
         .galaxy-container {
             position: absolute;
             width: 100%;
@@ -106,7 +106,7 @@
             text-shadow: 0 0 10px rgba(255, 182, 193, 0.2);
         }
 
-        /* بەشی دڵەکە */
+        /* بەشی دڵەکە - لەرزینەکەی بە تەواوی لادراوە */
         .heart-wrapper {
             position: relative;
             width: 120px;
@@ -114,23 +114,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .heart-wave {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            border: 2px solid #ff4d6d;
-            opacity: 0;
-            transform: scale(0.9);
-            pointer-events: none;
-        }
-
-        @keyframes waveAnimate {
-            0% { transform: scale(0.8); opacity: 0.9; border-color: #ff4d6d; }
-            100% { transform: scale(2.2); opacity: 0; border-color: #ff85a2; }
+            transition: all 0.6s ease;
         }
 
         .fingerprint-area {
@@ -148,25 +132,45 @@
             background: rgba(255, 255, 255, 0.05);
             box-shadow: 0 8px 25px rgba(255, 77, 109, 0.2);
             z-index: 5;
-            transition: all 0.5s ease;
         }
 
         .icon {
             font-size: 45px;
             z-index: 6;
-            display: inline-block;
         }
 
-        @keyframes hapticBeat {
-            0% { transform: scale(1); }
-            15% { transform: scale(1.25); }
-            30% { transform: scale(1.02); }
-            45% { transform: scale(1.18); }
-            70% { transform: scale(0.95); }
-            100% { transform: scale(1); }
+        /* 📈 هێڵی تەختیلی لێدانی دڵ (ECG Waveform) کە بە نەرمی دەڕوات */
+        .haptic-line-container {
+            width: 100%;
+            height: 50px;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            margin-top: 10px;
+            position: relative;
         }
 
-        /* زڕەی دڵە فڕیوەکان لە کاتی داگرتن */
+        .haptic-svg {
+            width: 200%;
+            height: 100%;
+            position: absolute;
+            right: 0;
+            animation: moveEcgLine 2.5s infinite linear;
+        }
+
+        @keyframes moveEcgLine {
+            0% { transform: translateX(0%); }
+            100% { transform: translateX(50%); }
+        }
+
+        .ecg-path {
+            stroke: #ff4d6d;
+            stroke-width: 2.5;
+            fill: none;
+            filter: drop-shadow(0 0 4px #ff4d6d);
+        }
+
         .particle-heart {
             position: absolute;
             color: #ff758f;
@@ -179,34 +183,6 @@
             0% { transform: translateY(0) scale(0.5); opacity: 0; }
             30% { opacity: 1; }
             100% { transform: translateY(-150px) scale(1.3); opacity: 0; }
-        }
-
-        /* 🌪️ ئەنیمەیشنی نوێی گەردەلوولی دڵە نیۆنەکان (Vortex Particles) */
-        .vortex-particle {
-            position: absolute;
-            pointer-events: none;
-            z-index: 2;
-            opacity: 0;
-            text-shadow: 0 0 8px rgba(255, 77, 109, 0.8);
-            animation: vortexMove 3.5s infinite ease-out;
-        }
-
-        @keyframes vortexMove {
-            0% {
-                transform: translate(0, 80px) scale(0.2) rotate(0deg);
-                opacity: 0;
-            }
-            10% {
-                opacity: 1;
-            }
-            90% {
-                opacity: 0.8;
-            }
-            100% {
-                /* جوڵەی بازنەیی فراوان بەرەو سەرەوە و دەوری کارتەکە */
-                transform: translate(var(--x-dest), var(--y-dest)) scale(1.2) rotate(720deg);
-                opacity: 0;
-            }
         }
     </style>
 </head>
@@ -222,15 +198,19 @@
         <div class="instruction-text" id="instruction">پەنجەت لێرە دابنێ و لای مەبە...💗</div>
 
         <div class="main-text" id="story-display">
-            هەست بە لێدانی دڵم دەکەیت??...
+            هەست بە لێدانی دڵم دەکەیت؟...
         </div>
 
         <div class="heart-wrapper" id="heart-wrap">
-            <div class="heart-wave" id="wave1"></div>
-            <div class="heart-wave" id="wave2"></div>
             <div class="fingerprint-area" id="hold-target">
                 <div class="icon" id="main-icon">❤️</div>
             </div>
+        </div>
+
+        <div class="haptic-line-container" id="haptic-container">
+            <svg class="haptic-svg" viewBox="0 0 800 60" preserveAspectRatio="none">
+                <path class="ecg-path" d="M 0 30 L 120 30 L 130 15 L 140 45 L 150 5 L 160 55 L 170 25 L 180 35 L 190 30 L 520 30 L 530 15 L 540 45 L 550 5 L 560 55 L 570 25 L 580 35 L 590 30 L 800 30" />
+            </svg>
         </div>
     </div>
 
@@ -239,10 +219,9 @@
         const storyDisplay = document.getElementById('story-display');
         const holdTarget = document.getElementById('hold-target');
         const mainIcon = document.getElementById('main-icon');
-        const wave1 = document.getElementById('wave1');
-        const wave2 = document.getElementById('wave2');
         const cardBox = document.getElementById('card-box');
         const heartWrap = document.getElementById('heart-wrap');
+        const hapticContainer = document.getElementById('haptic-container');
         const galaxy = document.getElementById('galaxy');
         const bgMusic = document.getElementById('bg-music');
 
@@ -270,7 +249,7 @@
         createGalaxy();
 
         const storyStages = [
-            "هەست بە لێدانی دڵم دەکەیت??...",
+            "هەست بە لێدانی دڵم دەکەیت؟...",
             "ئەم دڵە تەنیا بۆ تۆ لێ دەدات...",
             "خۆشم دەوێیت...",
             "خۆشەویسترین کەسی ژیانم...\n\nئەو دڵەی ئێستا هەستت پێکرد، لە ساتی بینینی تۆوە ئیتر موڵکی من نییە! تۆ بوویت بەو خوێنەی بە دەمارەکانمدا دەگەڕێت و بوویت بە ڕووناکی بۆ تاریکاییەکانی ڕۆحم.\n\nگەر هەموو تەمەنم یەک چرکە بێت، دەمهەوێت ئەو چرکەیە لەناو قووڵایی چاوەکانی تۆدا بەسەر ببەم. زۆرم خۆشدەوێیت، هێندەی ئەو ترپانەی لە سنگم دا لێدەدات..."
@@ -279,7 +258,6 @@
         let currentStage = 0;
         let stageInterval = null;
         let particleInterval = null;
-        let vortexInterval = null;
         let isHolding = false;
 
         function typeWriter(text, element, speed = 35) {
@@ -301,32 +279,6 @@
             type();
         }
 
-        // دروستکردنی گەردەلوولی دڵە نیۆنەکان
-        function startVortexEffect() {
-            vortexInterval = setInterval(() => {
-                let p = document.createElement('div');
-                p.classList.add('vortex-particle');
-                p.innerHTML = Math.random() > 0.5 ? '💗' : '✨';
-                
-                // دیاریکردنی ئاراستەی جیاواز بۆ ڕاکردنی دڵەکان بە شێوازی گەردەلوول
-                let angle = Math.random() * Math.PI * 2;
-                let radius = Math.random() * 150 + 100; 
-                let xDest = Math.cos(angle) * radius;
-                let yDest = Math.sin(angle) * radius - 150; // چوون بەرەو سەرەوە
-
-                p.style.setProperty('--x-dest', `${xDest}px`);
-                p.style.setProperty('--y-dest', `${yDest}px`);
-                
-                // لێکردنی سەنترەڵی گەردەلوولەکە لە خوارەوەی نامەکە
-                p.style.left = '50%';
-                p.style.bottom = '40px';
-                p.style.fontSize = Math.random() * 10 + 12 + 'px';
-                
-                cardBox.appendChild(p);
-                setTimeout(() => p.remove(), 3500);
-            }, 150);
-        }
-
         function progressStages() {
             if (currentStage < storyStages.length - 1) {
                 currentStage++;
@@ -337,14 +289,13 @@
                         instruction.innerText = "بۆ هەمیشە... ✨";
                         clearInterval(stageInterval);
                         
-                        // ١. لادان و شاردنەوەی دڵە گەورەکە
+                        // ١. نەهێشتنی دڵەکە بە تەواوی
                         heartWrap.style.transform = "scale(0)";
-                        setTimeout(() => { heartWrap.style.display = "none"; }, 500);
+                        setTimeout(() => { heartWrap.style.display = "none"; }, 400);
 
-                        // ٢. دەستپێکردنی سستەمی نوێی گەردەلوولی دڵە بریقەدارەکان
-                        startVortexEffect();
+                        // ٢. دەرکەوتنی هێڵی تەختیلی لێدانی دڵ
+                        hapticContainer.style.display = "flex";
 
-                        // ٣. گۆڕینی کەشی پاشبنەما بۆ قۆناغی کۆتایی
                         document.body.style.background = "radial-gradient(circle at center, #421223 0%, #17050c 70%, #000000 100%)";
                         cardBox.style.background = "rgba(255, 255, 255, 0.08)";
                         cardBox.style.boxShadow = "0 30px 70px rgba(255, 77, 109, 0.2)";
@@ -357,14 +308,8 @@
                         
                         if (currentStage === 1) {
                             instruction.innerText = "ئەم دڵە تەنیا بۆ تۆ لێ دەدات... 💕";
-                            mainIcon.style.animation = "hapticBeat 0.6s infinite cubic-bezier(0.25, 0.8, 0.25, 1)";
-                            wave1.style.animation = "waveAnimate 0.6s infinite linear";
-                            wave2.style.animation = "waveAnimate 0.6s infinite linear 0.3s";
                         } else if (currentStage === 2) {
                             instruction.innerText = "خۆشم دەوێیت... 💖";
-                            mainIcon.style.animation = "hapticBeat 0.4s infinite cubic-bezier(0.25, 0.8, 0.25, 1)";
-                            wave1.style.animation = "waveAnimate 0.4s infinite linear";
-                            wave2.style.animation = "waveAnimate 0.4s infinite linear 0.2s";
                         }
                     }
                 }, 200);
@@ -392,10 +337,6 @@
             holdTarget.style.borderColor = "#ff4d6d";
             holdTarget.style.background = "rgba(255, 77, 109, 0.15)";
             
-            mainIcon.style.animation = "hapticBeat 0.9s infinite cubic-bezier(0.25, 0.8, 0.25, 1)";
-            wave1.style.animation = "waveAnimate 0.9s infinite linear";
-            wave2.style.animation = "waveAnimate 0.9s infinite linear 0.45s";
-
             stageInterval = setInterval(progressStages, 1500);
             particleInterval = setInterval(spawnHeartParticle, 200);
         }
@@ -420,9 +361,6 @@
                 }, 150);
 
                 instruction.innerText = "پەنجەت لێرە دابنێ و لای مەبە...💗";
-                mainIcon.style.animation = "none";
-                wave1.style.animation = "none";
-                wave2.style.animation = "none";
                 holdTarget.style.borderColor = "rgba(255, 204, 213, 0.3)";
                 holdTarget.style.background = "rgba(255, 255, 255, 0.05)";
             }
